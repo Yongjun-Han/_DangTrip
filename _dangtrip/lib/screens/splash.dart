@@ -1,6 +1,7 @@
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/const/data.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
+import 'package:_dangtrip/screens/home.dart';
 import 'package:_dangtrip/screens/login.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    // deleteToken();
+    checkToken();
+  }
+
+  void deleteToken() async {
+    await storage.deleteAll();
   }
 
   void checkToken() async {
@@ -24,7 +31,17 @@ class _SplashScreenState extends State<SplashScreen> {
     if (refreshToken == null || accessToken == null) {
       if (!mounted) return;
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => const Login()),
+        MaterialPageRoute(
+          builder: (_) => const Login(),
+        ),
+        (route) => false,
+      );
+    } else {
+      if (!mounted) return;
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (_) => const HomeScreen(),
+        ),
         (route) => false,
       );
     }
