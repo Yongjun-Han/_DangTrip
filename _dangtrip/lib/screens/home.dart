@@ -1,3 +1,4 @@
+import 'package:_dangtrip/layout/bottom_navigationbar.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/banner_slide.dart';
@@ -20,6 +21,8 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: const BottomNav(),
+
       // bottomNavigationBar: BottomNavigationBar(items:),
       // floatingActionButton: SizedBox(
       //   width: 72,
@@ -110,36 +113,4 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// child: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceAround,
-//           children: [
-//             IconButton(
-//               onPressed: () {},
-//               icon: const Icon(Icons.home),
-//               disabledColor: const Color(0xffA9A8D3),
-//             ),
-//             IconButton(
-//               onPressed: () {
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                     fullscreenDialog: true,
-//                     builder: (context) => const Maps(),
-//                   ),
-//                 );
-//               },
-//               icon: const Icon(Icons.map_outlined),
-//               disabledColor: const Color(0xffA9A8D3),
-//             ),
-//             IconButton(
-//               onPressed: () {},
-//               icon: const Icon(Icons.photo_camera_back),
-//               disabledColor: const Color(0xffA9A8D3),
-//             ),
-//             IconButton(
-//               onPressed: () {},
-//               icon: const Icon(Icons.favorite_border_outlined),
-//               disabledColor: const Color(0xffA9A8D3),
-//             ),
-//           ],
-//         ),
+// 
