@@ -1,115 +1,107 @@
-import 'package:_dangtrip/layout/bottom_navigationbar.dart';
+import 'package:_dangtrip/Common/const/colors.dart';
+import 'package:_dangtrip/layout/default_layout.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/banner_slide.dart';
-
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController controller;
+  int index = 0;
+
   // final Future<List<WebtoonModel>> webtoons = ApiService.getTodaysToons();
+  @override
+  void initState() {
+    super.initState();
+    controller = TabController(length: 5, vsync: this);
+    controller.addListener(tabListner);
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(tabListner);
+    super.dispose();
+  }
+
+  void tabListner() {
+    setState(() {
+      index = controller.index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // print(webtoons);
-    return Scaffold(
-      extendBody: true,
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: const [
-            HomeBanner(),
+    return DefaultLayout(
+        bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: PRIMARY_COLOR,
+          unselectedItemColor: TEXT_DIMMED,
+          selectedFontSize: 10,
+          unselectedFontSize: 10,
+          type: BottomNavigationBarType.fixed,
+          onTap: (int index) {
+            controller.animateTo(index);
+          },
+          currentIndex: index,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: '홈',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.map_outlined),
+              label: '주변',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.route_outlined),
+              label: '여행짜기',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.photo_camera_back),
+              label: '댕생네컷',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_border_outlined),
+              label: 'MY',
+            ),
           ],
         ),
-      ),
-      bottomNavigationBar: const BottomNav(),
-
-      // bottomNavigationBar: BottomNavigationBar(items:),
-      // floatingActionButton: SizedBox(
-      //   width: 72,
-      //   height: 72,
-      //   child: FittedBox(
-      //     child: FloatingActionButton(
-      //       onPressed: () {},
-      //       backgroundColor: const Color(0xffA9A8D3),
-      //       child: const RotatedBox(
-      //         quarterTurns: 1,
-      //         child: Icon(Icons.route_outlined),
-      //       ),
-      //     ),
-      //   ),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // bottomNavigationBar: BottomAppBar(
-      //   notchMargin: 10,
-      //   shape: const CircularNotchedRectangle(),
-      //   color: const Color(0xff807ec2),
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //     children: [
-      //       Row(
-      //         children: [
-      //           Container(
-      //             width: MediaQuery.of(context).size.width / 2,
-      //             height: 56,
-      //             decoration: BoxDecoration(
-      //               border: Border.all(),
-      //             ),
-      //             child: Row(
-      //               mainAxisAlignment: MainAxisAlignment.start,
-      //               children: [
-      //                 const SizedBox(
-      //                   width: 20,
-      //                 ),
-      //                 IconButton(
-      //                   onPressed: () {},
-      //                   icon: const Icon(Icons.home_filled),
-      //                   color: Colors.white,
-      //                 ),
-      //                 const SizedBox(
-      //                   width: 16,
-      //                 ),
-      //                 IconButton(
-      //                   onPressed: () {},
-      //                   icon: const Icon(Icons.map_outlined),
-      //                   color: Colors.white,
-      //                 )
-      //               ],
-      //             ),
-      //           ),
-      //           Container(
-      //             height: 56,
-      //             width: MediaQuery.of(context).size.width / 2,
-      //             decoration: BoxDecoration(
-      //               border: Border.all(),
-      //             ),
-      //             child: Row(
-      //               mainAxisAlignment: MainAxisAlignment.end,
-      //               children: [
-      //                 IconButton(
-      //                   onPressed: () {},
-      //                   icon: const Icon(Icons.photo_camera_back),
-      //                   color: Colors.white,
-      //                 ),
-      //                 const SizedBox(
-      //                   width: 16,
-      //                 ),
-      //                 IconButton(
-      //                   onPressed: () {},
-      //                   icon: const Icon(Icons.favorite_border_outlined),
-      //                   color: Colors.white,
-      //                 ),
-      //                 const SizedBox(
-      //                   width: 20,
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-      //         ],
-      //       )
-      //     ],
-      //   ),
-      // ),
-    );
+        child: TabBarView(
+          //좌우 스크롤 고정
+          physics: const NeverScrollableScrollPhysics(),
+          controller: controller,
+          children: [
+            Center(
+              child: Container(
+                child: const Text('홈'),
+              ),
+            ),
+            Center(
+              child: Container(
+                child: const Text('주변'),
+              ),
+            ),
+            Center(
+              child: Container(
+                child: const Text('여행'),
+              ),
+            ),
+            Center(
+              child: Container(
+                child: const Text('댕생네컷'),
+              ),
+            ),
+            Center(
+              child: Container(
+                child: const Text('MY'),
+              ),
+            ),
+          ],
+        ));
   }
 }
 

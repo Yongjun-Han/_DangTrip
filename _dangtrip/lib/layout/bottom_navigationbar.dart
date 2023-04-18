@@ -40,37 +40,3 @@ class _BottomNavState extends State<BottomNav> {
     );
   }
 }
-
-// child: Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceAround,
-//           children: [
-//             IconButton(
-//               onPressed: () {},
-//               icon: const Icon(Icons.home),
-//               disabledColor: const Color(0xffA9A8D3),
-//             ),
-//             IconButton(
-//               onPressed: () {
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                     fullscreenDialog: true,
-//                     builder: (context) => const Maps(),
-//                   ),
-//                 );
-//               },
-//               icon: const Icon(Icons.map_outlined),
-//               disabledColor: const Color(0xffA9A8D3),
-//             ),
-//             IconButton(
-//               onPressed: () {},
-//               icon: const Icon(Icons.photo_camera_back),
-//               disabledColor: const Color(0xffA9A8D3),
-//             ),
-//             IconButton(
-//               onPressed: () {},
-//               icon: const Icon(Icons.favorite_border_outlined),
-//               disabledColor: const Color(0xffA9A8D3),
-//             ),
-//           ],
-//         ),

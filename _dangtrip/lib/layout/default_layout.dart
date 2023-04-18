@@ -4,11 +4,13 @@ class DefaultLayout extends StatelessWidget {
   final Widget child;
   final Color? bgColor;
   final String? title;
+  final Widget? bottomNavigationBar;
 
   const DefaultLayout({
     required this.child,
     this.bgColor,
     this.title,
+    this.bottomNavigationBar,
     super.key,
   });
 
@@ -18,6 +20,7 @@ class DefaultLayout extends StatelessWidget {
       backgroundColor: bgColor ?? Colors.white,
       appBar: renderAppBar(),
       body: child,
+      bottomNavigationBar: bottomNavigationBar,
     );
   }
 
@@ -28,7 +31,10 @@ class DefaultLayout extends StatelessWidget {
       return AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text(title!),
+        title: Text(
+          title!,
+        ),
+        foregroundColor: Colors.black,
       );
     }
   }
