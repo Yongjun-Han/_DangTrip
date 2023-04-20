@@ -28,12 +28,6 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     final dio = Dio();
 
-    //플랫폼별  localhost
-    // const emulatorIp = '10.0.2.2:3000';
-    const simulatorIp = '127.0.0.1:3000';
-
-    // final ip = Platform.isIOS ? simulatorIp : emulatorIp;
-
     return DefaultLayout(
       child: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -59,17 +53,7 @@ class _LoginState extends State<Login> {
                   Padding(
                     padding: const EdgeInsets.only(right: 20),
                     child: TextButton(
-                        onPressed: () async {
-                          const refreshToken =
-                              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTY4MTI4NjM1MywiZXhwIjoxNjgxMzcyNzUzfQ.DkBQsfZdJs2LLpKa0pJrUdmdAzcI0VNCDFcCCLEXDfQ";
-                          final res = await dio.post(
-                            'http://$simulatorIp/auth/token',
-                            options: Options(headers: {
-                              'authorization': 'Bearer $refreshToken',
-                            }),
-                          );
-                          print(res.data);
-                        },
+                        onPressed: () async {},
                         child: const Text(
                           '회원가입',
                           style: TextStyle(color: PRIMARY_COLOR),
@@ -132,7 +116,7 @@ class _LoginState extends State<Login> {
 
                         String token = stringToBase64.encode(rawString);
                         final res = await dio.post(
-                          'http://$simulatorIp/auth/login',
+                          'http://$ip/auth/login',
                           options: Options(headers: {
                             'authorization': 'Basic $token',
                           }),

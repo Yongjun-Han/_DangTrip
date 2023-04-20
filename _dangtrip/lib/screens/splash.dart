@@ -3,6 +3,7 @@ import 'package:_dangtrip/Common/const/data.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
 import 'package:_dangtrip/screens/home.dart';
 import 'package:_dangtrip/screens/login.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -27,20 +28,27 @@ class _SplashScreenState extends State<SplashScreen> {
   void checkToken() async {
     final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+    final dio = Dio();
 
-    if (refreshToken == null || accessToken == null) {
-      if (!mounted) return;
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (_) => const Login(),
+    try {
+      final res = await dio.post(
+        'http://$ip/auth/token',
+        options: Options(
+          headers: {
+            'authorization': 'Bearer $refreshToken',
+          },
         ),
-        (route) => false,
       );
-    } else {
-      if (!mounted) return;
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (_) => const HomeScreen(),
+        ),
+        (route) => false,
+      );
+    } catch (e) {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (_) => const Login(),
         ),
         (route) => false,
       );
