@@ -1,6 +1,7 @@
 // import 'dart:convert';
 
 import 'package:_dangtrip/Common/const/colors.dart';
+import 'package:_dangtrip/model/restaurant_model.dart';
 import 'package:flutter/material.dart';
 
 class PlaceInfoCard extends StatelessWidget {
@@ -23,6 +24,20 @@ class PlaceInfoCard extends StatelessWidget {
     // required this.dogType,
     super.key,
   });
+
+  factory PlaceInfoCard.fromModel({
+    required RestaurantModel model,
+  }) {
+    return PlaceInfoCard(
+      image: Image.network(
+        model.thumbUrl,
+        fit: BoxFit.cover,
+      ),
+      name: model.name,
+      tags: model.tags,
+      ratings: model.ratings,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
