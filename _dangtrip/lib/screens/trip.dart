@@ -2,6 +2,7 @@ import 'package:_dangtrip/Common/Components/place_info_card.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/const/data.dart';
 import 'package:_dangtrip/model/restaurant_model.dart';
+import 'package:_dangtrip/screens/place_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -188,9 +189,15 @@ class _TripState extends State<Trip> {
                         final pItem = RestaurantModel.fromJson(
                           json: item,
                         );
-                        return PlaceInfoCard.fromModel(
-                          model: pItem,
-                          // dogType: '소형견',
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => const PlaceDetailScreen()));
+                          },
+                          child: PlaceInfoCard.fromModel(
+                            model: pItem,
+                            // dogType: '소형견',
+                          ),
                         );
                       },
                       separatorBuilder: (_, index) {

@@ -53,8 +53,10 @@ flutter:
   - lib/assets/banner/AD_3.png
   - lib/assets/banner/AD_4.png
   - lib/assets/banner/AD_5.png
+  - lib/assets/banner/detail_test.png
   - lib/assets/logo/location.gif
   - lib/assets/logo/dogType.png
+  - lib/assets/logo/parking.png
   - lib/assets/event/kanu_dog.jpg
   - lib/assets/logo/splash.png
   - lib/Data/cateData.json

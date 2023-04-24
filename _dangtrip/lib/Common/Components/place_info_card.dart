@@ -15,18 +15,22 @@ class PlaceInfoCard extends StatelessWidget {
   final List<String> tags;
   //평점
   final double ratings;
+  //상세페이지 여부
+  final bool isDetail;
 
   const PlaceInfoCard({
     required this.image,
     required this.name,
     required this.tags,
     required this.ratings,
+    this.isDetail = false,
     // required this.dogType,
     super.key,
   });
 
   factory PlaceInfoCard.fromModel({
     required RestaurantModel model,
+    bool isDetail = false,
   }) {
     return PlaceInfoCard(
       image: Image.network(
@@ -36,6 +40,7 @@ class PlaceInfoCard extends StatelessWidget {
       name: model.name,
       tags: model.tags,
       ratings: model.ratings,
+      isDetail: isDetail,
     );
   }
 
@@ -43,10 +48,12 @@ class PlaceInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: image,
-        ),
+        if (isDetail) image,
+        if (!isDetail)
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: image,
+          ),
         const SizedBox(
           height: 16,
         ),
