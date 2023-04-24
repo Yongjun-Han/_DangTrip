@@ -1,12 +1,18 @@
 import 'package:_dangtrip/Common/Components/place_info_card.dart';
+import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/const/data.dart';
 import 'package:_dangtrip/model/restaurant_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class Trip extends StatelessWidget {
+class Trip extends StatefulWidget {
   const Trip({super.key});
 
+  @override
+  State<Trip> createState() => _TripState();
+}
+
+class _TripState extends State<Trip> {
   Future<List> paginateData() async {
     final dio = Dio();
     //유효기간 5분
@@ -26,6 +32,7 @@ class Trip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const bool isSelcted = false;
     return Center(
       child: SafeArea(
         child: Padding(
@@ -61,6 +68,106 @@ class Trip extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              SizedBox(
+                height: 41,
+                child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          print(category[index]);
+                        },
+                        child: Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: const Color(0xffeeeeee),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  categoryIcon[index],
+                                  size: 16,
+                                  color: const Color(0xffafafaf),
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  category[index],
+                                  style: const TextStyle(
+                                      color: Color(0xffafafaf),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        width: 10,
+                      );
+                    },
+                    itemCount: category.length),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Container(
+                height: 2,
+                color: const Color(0xfff6f6f6),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: const Color(0xffeeeeee),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20, top: 8, right: 16, bottom: 8),
+                      child: Row(
+                        children: const [
+                          Text("견종"),
+                          Icon(Icons.arrow_drop_down_rounded)
+                        ],
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: PRIMARY_COLOR,
+                    ),
+                    onPressed: () {},
+                    child: Row(
+                      children: const [
+                        Text(
+                          "거리순",
+                          style: TextStyle(color: PRIMARY_COLOR),
+                        ),
+                        Icon(
+                          Icons.arrow_drop_down_rounded,
+                          color: PRIMARY_COLOR,
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
               const SizedBox(
                 height: 24,
