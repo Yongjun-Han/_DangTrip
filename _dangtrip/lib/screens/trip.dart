@@ -14,8 +14,10 @@ class Trip extends StatefulWidget {
 class _TripState extends State<Trip> {
   Future<List> paginateData() async {
     final dio = Dio();
+
     final res = await dio.get(
         'https://www.pettravel.kr/api/listPart.do?page=1&pageBlock=10&partCode=PC01');
+    // print(res.data);
     return res.data;
   }
 
@@ -166,11 +168,13 @@ class _TripState extends State<Trip> {
                   if (!snapshot.hasData) {
                     return Container();
                   }
-                  print(snapshot.data![0]['resultList'].length);
+                  // print(snapshot.data![0]['resultList'].length);
+                  // print(snapshot.data![0]['resultList'][0]);
                   return Expanded(
                     child: ListView.separated(
                       itemCount: snapshot.data![0]['resultList'].length,
                       itemBuilder: (_, index) {
+                        final item = snapshot.data![0]['resultList'][index];
                         return PlaceInfoCard(
                           image: Image.asset(
                             'lib/assets/banner/detail_test.png',
@@ -178,14 +182,14 @@ class _TripState extends State<Trip> {
                             height: 250,
                             width: MediaQuery.of(context).size.width,
                           ),
-                          name: '카페 캐빈',
-                          tags: const ['1', '2', '3'],
+                          name: item['title'],
+                          area: item['areaName'],
                           ratings: 4.7,
                         );
                       },
                       separatorBuilder: (_, index) {
                         return const SizedBox(
-                          height: 16,
+                          height: 8,
                         );
                       },
                     ),

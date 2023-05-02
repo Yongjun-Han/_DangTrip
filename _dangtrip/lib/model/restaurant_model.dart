@@ -8,7 +8,7 @@ enum RestaurantPriceRange {
 
 class RestaurantModel {
   final String name, id, thumbUrl;
-  final List<String> tags;
+  final String area;
   final RestaurantPriceRange priceRange;
   final double ratings;
   final int ratingsCount, deliveryTime, deliveryFee;
@@ -17,7 +17,7 @@ class RestaurantModel {
     required this.id,
     required this.name,
     required this.thumbUrl,
-    required this.tags,
+    required this.area,
     required this.priceRange,
     required this.ratings,
     required this.ratingsCount,
@@ -31,7 +31,7 @@ class RestaurantModel {
       id: json['id'],
       name: json['name'],
       thumbUrl: 'http://$ip${json['thumbUrl']}',
-      tags: List<String>.from(json['tags']),
+      area: json['area'],
       priceRange: RestaurantPriceRange.values.firstWhere(
         (e) => e.name == json['priceRange'],
       ),

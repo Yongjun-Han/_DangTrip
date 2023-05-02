@@ -1,6 +1,3 @@
-// import 'dart:convert';
-
-import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/model/restaurant_model.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +9,7 @@ class PlaceInfoCard extends StatelessWidget {
   //견종
   // final String dogType;
   //태그
-  final List<String> tags;
+  final String area;
   //평점
   final double ratings;
   //상세페이지 여부
@@ -21,7 +18,7 @@ class PlaceInfoCard extends StatelessWidget {
   const PlaceInfoCard({
     required this.image,
     required this.name,
-    required this.tags,
+    required this.area,
     required this.ratings,
     this.isDetail = false,
     // required this.dogType,
@@ -38,7 +35,7 @@ class PlaceInfoCard extends StatelessWidget {
         fit: BoxFit.cover,
       ),
       name: model.name,
-      tags: model.tags,
+      area: model.area,
       ratings: model.ratings,
       isDetail: isDetail,
     );
@@ -90,14 +87,14 @@ class PlaceInfoCard extends StatelessWidget {
                 height: 8,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    tags.join(' · '),
+                    area,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: PRIMARY_COLOR,
+                      color: Colors.grey,
                     ),
                   ),
                 ],
