@@ -59,5 +59,3 @@ flutter:
   - lib/assets/logo/parking.png
   - lib/assets/event/kanu_dog.jpg
   - lib/assets/logo/splash.png
-  - lib/Data/cateData.json
-  - lib/Data/data.json

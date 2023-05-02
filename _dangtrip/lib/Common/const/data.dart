@@ -15,27 +15,17 @@ const simulatorIp = '127.0.0.1:3000';
 final ip = Platform.isIOS ? simulatorIp : emulatorIp;
 
 final List<String> category = [
-  '식당',
-  '카페',
+  '식음료',
   '숙박',
-  '동물병원',
-  '공원',
-  '애견운동장',
-  '미용',
-  '위탁관리업',
   '관광지',
-  '놀이터',
+  '체험',
+  '동물병원',
 ];
 
 final List<IconData> categoryIcon = [
   Icons.local_dining_outlined,
-  Icons.emoji_food_beverage_rounded,
   Icons.bed,
-  Icons.local_hospital_rounded,
-  Icons.park_rounded,
-  Icons.fence_rounded,
-  Icons.content_cut_rounded,
-  Icons.home_work_outlined,
   Icons.travel_explore_rounded,
-  Icons.local_play_rounded,
+  Icons.fence_rounded,
+  Icons.local_hospital_rounded,
 ];

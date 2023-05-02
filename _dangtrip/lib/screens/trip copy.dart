@@ -1,6 +1,8 @@
 import 'package:_dangtrip/Common/Components/place_info_card.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/const/data.dart';
+import 'package:_dangtrip/model/restaurant_model.dart';
+import 'package:_dangtrip/screens/place_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -14,13 +16,23 @@ class Trip extends StatefulWidget {
 class _TripState extends State<Trip> {
   Future<List> paginateData() async {
     final dio = Dio();
+    //유효기간 5분
+    final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+    //새로 발급
     final res = await dio.get(
-        'https://www.pettravel.kr/api/listPart.do?page=1&pageBlock=10&partCode=PC01');
-    return res.data;
+      'http://$ip/restaurant',
+      options: Options(
+        headers: {
+          'authorization': 'Bearer $accessToken',
+        },
+      ),
+    );
+    return res.data['data'];
   }
 
   @override
   Widget build(BuildContext context) {
+    const bool isSelcted = false;
     return Center(
       child: SafeArea(
         child: Padding(
@@ -166,21 +178,25 @@ class _TripState extends State<Trip> {
                   if (!snapshot.hasData) {
                     return Container();
                   }
-                  print(snapshot.data![0]['resultList'].length);
                   return Expanded(
                     child: ListView.separated(
-                      itemCount: snapshot.data![0]['resultList'].length,
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
                       itemBuilder: (_, index) {
-                        return PlaceInfoCard(
-                          image: Image.asset(
-                            'lib/assets/banner/detail_test.png',
-                            fit: BoxFit.cover,
-                            height: 250,
-                            width: MediaQuery.of(context).size.width,
+                        final item = snapshot.data![index];
+                        final pItem = RestaurantModel.fromJson(
+                          json: item,
+                        );
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => const PlaceDetailScreen()));
+                          },
+                          child: PlaceInfoCard.fromModel(
+                            model: pItem,
+                            // dogType: '소형견',
                           ),
-                          name: '카페 캐빈',
-                          tags: const ['1', '2', '3'],
-                          ratings: 4.7,
                         );
                       },
                       separatorBuilder: (_, index) {
@@ -190,34 +206,6 @@ class _TripState extends State<Trip> {
                       },
                     ),
                   );
-                  // return Expanded(
-                  //   child: ListView.separated(
-                  //     scrollDirection: Axis.vertical,
-                  //     shrinkWrap: true,
-                  //     itemCount: snapshot.data!.length,
-                  //     itemBuilder: (_, index) {
-                  //       final item = snapshot.data![index];
-                  //       final pItem = RestaurantModel.fromJson(
-                  //         json: item,
-                  //       );
-                  //       return GestureDetector(
-                  //         onTap: () {
-                  //           Navigator.of(context).push(MaterialPageRoute(
-                  //               builder: (_) => const PlaceDetailScreen()));
-                  //         },
-                  //         child: PlaceInfoCard.fromModel(
-                  //           model: pItem,
-                  //           // dogType: '소형견',
-                  //         ),
-                  //       );
-                  //     },
-                  //     separatorBuilder: (_, index) {
-                  //       return const SizedBox(
-                  //         height: 16,
-                  //       );
-                  //     },
-                  //   ),
-                  // );
                 },
               )
             ],

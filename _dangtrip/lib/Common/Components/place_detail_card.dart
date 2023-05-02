@@ -2,38 +2,44 @@ import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:flutter/material.dart';
 
 class PlaceDetailCard extends StatelessWidget {
-  // //썸네일
-  // final Widget image;
-  // //상호명
-  // final String name;
-  // //평점
-  // final double ratings;
-  // //주소
-  // final String address;
-  // //견종
-  // final String dogtype;
-  // //주차여부
-  // final bool parkinglot;
-  // //와이파이
-  // final bool wifi;
-  // //가게소개
-  // final String placeinfo;
-  // //연락처
-  // final String tel;
-  // //홈페이지
-  // final String link;
+  //썸네일
+  final Widget image;
+  //상호명
+  final String name;
+  //평점
+  final double ratings;
+  //주소
+  final String address;
+  //견종
+  final String dogtype;
+  //주차여부
+  final bool parkinglot;
+  //와이파이
+  final bool wifi;
+  //가게소개
+  final String placeinfo;
+  //연락처
+  final String tel;
+  //홈페이지
+  final String link;
+  //키워드
+  final String keyword;
+  //주요시설
+  final String mainFacility;
 
   const PlaceDetailCard({
-    // required this.image,
-    // required this.name,
-    // required this.ratings,
-    // required this.address,
-    // required this.dogtype,
-    // required this.parkinglot,
-    // required this.wifi,
-    // required this.placeinfo,
-    // required this.tel,
-    // required this.link,
+    required this.image,
+    required this.name,
+    required this.ratings,
+    required this.address,
+    required this.dogtype,
+    required this.parkinglot,
+    required this.wifi,
+    required this.placeinfo,
+    required this.tel,
+    required this.link,
+    required this.keyword,
+    required this.mainFacility,
     super.key,
   });
 
@@ -47,7 +53,7 @@ class PlaceDetailCard extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Image.asset('lib/assets/banner/detail_test.png'),
+                image,
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 56, horizontal: 8),
@@ -77,24 +83,24 @@ class PlaceDetailCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        children: const [
+                        children: [
                           Text(
-                            '디얼투데이',
-                            style: TextStyle(
+                            name,
+                            style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Icon(
+                          const Icon(
                             Icons.star,
                             size: 14,
                           ),
                           Text(
-                            '4.7',
-                            style: TextStyle(
+                            ratings.toString(),
+                            style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                             ),
@@ -104,9 +110,9 @@ class PlaceDetailCard extends StatelessWidget {
                       const SizedBox(
                         height: 12,
                       ),
-                      const Text(
-                        '대전 서구 도솔로291 1층 디얼투데이',
-                        style: TextStyle(
+                      Text(
+                        address,
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
                           color: PRIMARY_COLOR,
@@ -149,9 +155,9 @@ class PlaceDetailCard extends StatelessWidget {
                               const SizedBox(
                                 width: 10,
                               ),
-                              const Text(
-                                '중형견',
-                                style: TextStyle(
+                              Text(
+                                dogtype,
+                                style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -170,34 +176,52 @@ class PlaceDetailCard extends StatelessWidget {
                               const SizedBox(
                                 width: 10,
                               ),
-                              const Text(
-                                '주차가능',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
+                              if (parkinglot)
+                                const Text(
+                                  '주차가능',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              )
+                              if (!parkinglot)
+                                const Text(
+                                  '주차불가',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
                             ],
                           ),
                           const SizedBox(
                             height: 16,
                           ),
                           Row(
-                            children: const [
-                              Icon(
+                            children: [
+                              const Icon(
                                 Icons.wifi,
                                 size: 18,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
-                              Text(
-                                '무선인터넷 제공',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
+                              if (wifi)
+                                const Text(
+                                  '무선인터넷 제공',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              )
+                              if (!wifi)
+                                const Text(
+                                  '무선인터넷 없음',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
                             ],
                           ),
                         ],
@@ -217,9 +241,11 @@ class PlaceDetailCard extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  const Text(
-                    '야외정원이 있는 주택개조 카페로 커피와 음료 그리고 디저트와 베이커리도 판매하는 애견동반가능 카페입니다',
-                    style: TextStyle(
+                  Text(
+                    placeinfo,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       color: Color(0xff4d4d4d),
@@ -273,6 +299,8 @@ class PlaceDetailCard extends StatelessWidget {
                   ),
                   const Text(
                     'https://blog.naver.com/qhfus1103/222926664940',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: PRIMARY_COLOR,
                       fontSize: 14,
