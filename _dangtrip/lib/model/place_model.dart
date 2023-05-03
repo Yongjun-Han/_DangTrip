@@ -1,8 +1,8 @@
-class PlaceModel {
+class PlaceInfoModel {
   final String areaName, partName, title, address, latitude, longitude, tel;
   final int contentSeq;
 
-  PlaceModel({
+  PlaceInfoModel({
     required this.contentSeq,
     required this.areaName,
     required this.partName,
@@ -12,6 +12,20 @@ class PlaceModel {
     required this.longitude,
     required this.tel,
   });
+  factory PlaceInfoModel.fromJson({
+    required Map<String, dynamic> json,
+  }) {
+    return PlaceInfoModel(
+      contentSeq: json['contentSeq'],
+      areaName: json['areaName'],
+      partName: json['partName'],
+      title: json['title'],
+      address: json['address'],
+      latitude: json['latitude'],
+      longitude: json['longitude'],
+      tel: json['tel'],
+    );
+  }
 }
   // "contentSeq": 15,
   // "areaName": "춘천시",

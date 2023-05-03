@@ -1,4 +1,3 @@
-import 'package:_dangtrip/model/restaurant_model.dart';
 import 'package:flutter/material.dart';
 
 class PlaceInfoCard extends StatelessWidget {
@@ -25,21 +24,22 @@ class PlaceInfoCard extends StatelessWidget {
     super.key,
   });
 
-  factory PlaceInfoCard.fromModel({
-    required RestaurantModel model,
-    bool isDetail = false,
-  }) {
-    return PlaceInfoCard(
-      image: Image.network(
-        model.thumbUrl,
-        fit: BoxFit.cover,
-      ),
-      name: model.name,
-      area: model.area,
-      ratings: model.ratings,
-      isDetail: isDetail,
-    );
-  }
+  // factory PlaceInfoCard.fromModel({
+  //   required PlaceInfoModel model,
+  //   bool isDetail = false,
+  // }) {
+  //   return PlaceInfoCard(
+  //     image: Image.asset(
+  //       'lib/assets/banner/detail_test.png',
+  //       fit: BoxFit.cover,
+  //       height: 250,
+  //       width: MediaQuery.of(context).size.width,
+  //     ),
+  //     name: model.title,
+  //     area: model.areaName,
+  //     ratings: 4.7,
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

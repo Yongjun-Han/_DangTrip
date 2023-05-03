@@ -176,16 +176,8 @@ class _TripState extends State<Trip> {
                       itemCount: snapshot.data![0]['resultList'].length,
                       itemBuilder: (_, index) {
                         final item = snapshot.data![0]['resultList'][index];
-                        final parsedItem = PlaceModel(
-                          contentSeq: item['contentSeq'],
-                          areaName: item['areaName'],
-                          partName: item['partName'],
-                          title: item['title'],
-                          address: item['address'],
-                          latitude: item['latitude'],
-                          longitude: item['longitude'],
-                          tel: item['tel'],
-                        );
+                        final parsedItem = PlaceInfoModel.fromJson(json: item);
+                        //장소 카드 리스트의 카드
                         return PlaceInfoCard(
                           image: Image.asset(
                             'lib/assets/banner/detail_test.png',
@@ -197,6 +189,7 @@ class _TripState extends State<Trip> {
                           area: parsedItem.areaName,
                           ratings: 4.7,
                         );
+                        // model: parsedItem,
                       },
                       separatorBuilder: (_, index) {
                         return const SizedBox(
