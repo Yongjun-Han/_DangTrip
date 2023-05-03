@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PlaceInfoCard extends StatelessWidget {
+  //고유아이디
+  final int contentSeq;
   // 썸네일
   final Widget image;
   //상호명
@@ -15,6 +17,7 @@ class PlaceInfoCard extends StatelessWidget {
   final bool isDetail;
 
   const PlaceInfoCard({
+    required this.contentSeq,
     required this.image,
     required this.name,
     required this.area,

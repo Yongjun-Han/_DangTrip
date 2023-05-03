@@ -2,6 +2,7 @@ import 'package:_dangtrip/Common/Components/place_info_card.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/const/data.dart';
 import 'package:_dangtrip/model/place_model.dart';
+import 'package:_dangtrip/screens/place_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -178,16 +179,23 @@ class _TripState extends State<Trip> {
                         final item = snapshot.data![0]['resultList'][index];
                         final parsedItem = PlaceInfoModel.fromJson(json: item);
                         //장소 카드 리스트의 카드
-                        return PlaceInfoCard(
-                          image: Image.asset(
-                            'lib/assets/banner/detail_test.png',
-                            fit: BoxFit.cover,
-                            height: 250,
-                            width: MediaQuery.of(context).size.width,
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => const PlaceDetailScreen()));
+                          },
+                          child: PlaceInfoCard(
+                            contentSeq: parsedItem.contentSeq,
+                            image: Image.asset(
+                              'lib/assets/banner/detail_test.png',
+                              fit: BoxFit.cover,
+                              height: 250,
+                              width: MediaQuery.of(context).size.width,
+                            ),
+                            name: parsedItem.title,
+                            area: parsedItem.areaName,
+                            ratings: 4.7,
                           ),
-                          name: parsedItem.title,
-                          area: parsedItem.areaName,
-                          ratings: 4.7,
                         );
                         // model: parsedItem,
                       },
@@ -198,34 +206,6 @@ class _TripState extends State<Trip> {
                       },
                     ),
                   );
-                  // return Expanded(
-                  //   child: ListView.separated(
-                  //     scrollDirection: Axis.vertical,
-                  //     shrinkWrap: true,
-                  //     itemCount: snapshot.data!.length,
-                  //     itemBuilder: (_, index) {
-                  //       final item = snapshot.data![index];
-                  //       final pItem = RestaurantModel.fromJson(
-                  //         json: item,
-                  //       );
-                  //       return GestureDetector(
-                  //         onTap: () {
-                  //           Navigator.of(context).push(MaterialPageRoute(
-                  //               builder: (_) => const PlaceDetailScreen()));
-                  //         },
-                  //         child: PlaceInfoCard.fromModel(
-                  //           model: pItem,
-                  //           // dogType: '소형견',
-                  //         ),
-                  //       );
-                  //     },
-                  //     separatorBuilder: (_, index) {
-                  //       return const SizedBox(
-                  //         height: 16,
-                  //       );
-                  //     },
-                  //   ),
-                  // );
                 },
               )
             ],

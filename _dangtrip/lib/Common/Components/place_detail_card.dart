@@ -1,47 +1,53 @@
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class PlaceDetailCard extends StatelessWidget {
   //썸네일
   final Widget image;
-  //상호명
-  final String name;
-  //평점
-  final double ratings;
-  //주소
-  final String address;
-  //견종
-  final String dogtype;
+  //상호명,주소,키워드,연락처,영업시간,홈페이지,가게소개,주요시설,메뉴,주의사항,견종
+  final String title,
+      areaName,
+      partName,
+      address,
+      keyword,
+      tel,
+      usedTime,
+      homePage,
+      content,
+      mainFacility,
+      usedCost,
+      policyCautions,
+      dogBreed,
+      latitude,
+      longitude,
+      parkingFlag;
   //주차여부
-  final bool parkinglot;
-  //와이파이
-  final bool wifi;
-  //가게소개
-  final String placeinfo;
-  //연락처
-  final String tel;
-  //홈페이지
-  final String link;
-  //키워드
-  final String keyword;
-  //주요시설
-  final String mainFacility;
 
   const PlaceDetailCard({
     required this.image,
-    required this.name,
-    required this.ratings,
+    required this.title,
+    required this.areaName,
+    required this.partName,
     required this.address,
-    required this.dogtype,
-    required this.parkinglot,
-    required this.wifi,
-    required this.placeinfo,
-    required this.tel,
-    required this.link,
     required this.keyword,
+    required this.tel,
+    required this.usedTime,
+    required this.homePage,
+    required this.content,
     required this.mainFacility,
+    required this.usedCost,
+    required this.policyCautions,
+    required this.dogBreed,
+    required this.latitude,
+    required this.longitude,
+    required this.parkingFlag,
     super.key,
   });
+
+  onButtonTap() async {
+    await launchUrlString(homePage);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +79,7 @@ class PlaceDetailCard extends StatelessWidget {
             const SizedBox(
               height: 24,
             ),
-            //가게명 주소 평점
+            //가게명 주소
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 24),
               child: Row(
@@ -85,26 +91,23 @@ class PlaceDetailCard extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            name,
+                            title,
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const Icon(
-                            Icons.star,
-                            size: 14,
-                          ),
-                          Text(
-                            ratings.toString(),
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
+                          // const SizedBox(
+                          //   width: 16,
+                          // ),
+                          // Text(
+                          //   areaName,
+                          //   style: const TextStyle(
+                          //     fontSize: 14,
+                          //     fontWeight: FontWeight.w500,
+                          //     color: Colors.grey,
+                          //   ),
+                          // )
                         ],
                       ),
                       const SizedBox(
@@ -115,7 +118,7 @@ class PlaceDetailCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
-                          color: PRIMARY_COLOR,
+                          color: Colors.grey,
                         ),
                       )
                     ],
@@ -128,7 +131,7 @@ class PlaceDetailCard extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 16,
+              height: 24,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -151,17 +154,38 @@ class PlaceDetailCard extends StatelessWidget {
                               Image.asset(
                                 'lib/assets/logo/dogType.png',
                                 width: 18,
+                                color: const Color.fromARGB(255, 92, 92, 92),
                               ),
                               const SizedBox(
-                                width: 10,
+                                width: 12,
                               ),
-                              Text(
-                                dogtype,
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
+                              if (dogBreed == 'S')
+                                const Text(
+                                  '소형견',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 92, 92, 92),
+                                  ),
                                 ),
-                              )
+                              if (dogBreed == 'M')
+                                const Text(
+                                  '중형견',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 92, 92, 92),
+                                  ),
+                                ),
+                              if (dogBreed == 'L')
+                                const Text(
+                                  '대형견',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 92, 92, 92),
+                                  ),
+                                )
                             ],
                           ),
                           const SizedBox(
@@ -172,24 +196,36 @@ class PlaceDetailCard extends StatelessWidget {
                               Image.asset(
                                 'lib/assets/logo/parking.png',
                                 width: 18,
+                                color: const Color.fromARGB(255, 92, 92, 92),
                               ),
                               const SizedBox(
-                                width: 10,
+                                width: 12,
                               ),
-                              if (parkinglot)
+                              if (parkingFlag == 'Y')
                                 const Text(
                                   '주차가능',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 92, 92, 92),
                                   ),
                                 ),
-                              if (!parkinglot)
+                              if (parkingFlag == 'N')
                                 const Text(
                                   '주차불가',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 92, 92, 92),
+                                  ),
+                                ),
+                              if (parkingFlag == '')
+                                const Text(
+                                  '업체문의',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 92, 92, 92),
                                   ),
                                 )
                             ],
@@ -200,26 +236,29 @@ class PlaceDetailCard extends StatelessWidget {
                           Row(
                             children: [
                               const Icon(
-                                Icons.wifi,
+                                Icons.access_time,
                                 size: 18,
+                                color: Color.fromARGB(255, 92, 92, 92),
                               ),
                               const SizedBox(
-                                width: 10,
+                                width: 12,
                               ),
-                              if (wifi)
+                              if (usedTime == '')
                                 const Text(
-                                  '무선인터넷 제공',
+                                  '업체문의',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 92, 92, 92),
                                   ),
                                 ),
-                              if (!wifi)
-                                const Text(
-                                  '무선인터넷 없음',
-                                  style: TextStyle(
+                              if (usedTime != '')
+                                Text(
+                                  usedTime,
+                                  style: const TextStyle(
                                     fontSize: 12,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color.fromARGB(255, 92, 92, 92),
                                   ),
                                 )
                             ],
@@ -242,8 +281,8 @@ class PlaceDetailCard extends StatelessWidget {
                     height: 16,
                   ),
                   Text(
-                    placeinfo,
-                    maxLines: 2,
+                    content,
+                    maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 14,
@@ -254,13 +293,21 @@ class PlaceDetailCard extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  const Text(
-                    '음식점>카페,디저트',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xffafafaf),
-                    ),
+                  Row(
+                    children: [
+                      const Text(
+                        '태그 : ',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      Text(
+                        keyword,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: PRIMARY_COLOR,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 24,
@@ -276,9 +323,30 @@ class PlaceDetailCard extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
+                  Text(
+                    tel,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xff4d4d4d),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
                   const Text(
-                    '042-1234-5678',
+                    '주요시설',
                     style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: Color(0xff4d4d4d),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    mainFacility,
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xff4d4d4d),
                     ),
@@ -297,13 +365,46 @@ class PlaceDetailCard extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
+                  GestureDetector(
+                    onTap: onButtonTap,
+                    child: Text(
+                      homePage,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: PRIMARY_COLOR,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 1,
+                    decoration: const BoxDecoration(color: Color(0xffe6e6e6)),
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
                   const Text(
-                    'https://blog.naver.com/qhfus1103/222926664940',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                    '주의사항',
                     style: TextStyle(
-                      color: PRIMARY_COLOR,
+                      fontWeight: FontWeight.bold,
                       fontSize: 14,
+                      color: Color.fromARGB(255, 232, 111, 111),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    // policyCautions.substring(0, policyCautions.indexOf(' -')),
+                    policyCautions,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xff4d4d4d),
                     ),
                   ),
                   const SizedBox(
@@ -327,9 +428,9 @@ class PlaceDetailCard extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  const Text(
-                    '대전광역시 서구 도솔로 291 1층 디얼투데이',
-                    style: TextStyle(
+                  Text(
+                    address,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                     ),
