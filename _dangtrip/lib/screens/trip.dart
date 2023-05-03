@@ -1,6 +1,7 @@
 import 'package:_dangtrip/Common/Components/place_info_card.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/const/data.dart';
+import 'package:_dangtrip/model/place_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -175,6 +176,16 @@ class _TripState extends State<Trip> {
                       itemCount: snapshot.data![0]['resultList'].length,
                       itemBuilder: (_, index) {
                         final item = snapshot.data![0]['resultList'][index];
+                        final parsedItem = PlaceModel(
+                          contentSeq: item['contentSeq'],
+                          areaName: item['areaName'],
+                          partName: item['partName'],
+                          title: item['title'],
+                          address: item['address'],
+                          latitude: item['latitude'],
+                          longitude: item['longitude'],
+                          tel: item['tel'],
+                        );
                         return PlaceInfoCard(
                           image: Image.asset(
                             'lib/assets/banner/detail_test.png',
@@ -182,8 +193,8 @@ class _TripState extends State<Trip> {
                             height: 250,
                             width: MediaQuery.of(context).size.width,
                           ),
-                          name: item['title'],
-                          area: item['areaName'],
+                          name: parsedItem.title,
+                          area: parsedItem.areaName,
                           ratings: 4.7,
                         );
                       },
