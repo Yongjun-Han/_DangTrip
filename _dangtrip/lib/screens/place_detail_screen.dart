@@ -1,5 +1,6 @@
 import 'package:_dangtrip/Common/Components/place_detail_card.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
+import 'package:_dangtrip/model/place_detail_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -7,31 +8,27 @@ class PlaceDetailScreen extends StatelessWidget {
   final int contentSeq;
   final String partName;
 
-// http://www.pettravel.kr/api/detailSeqArea.do?areaCode=AC01&contentNum=15
-  Future getPlaceDetail() async {
+  // Future<Map<String, dynamic>> getPlaceDetail() async {
+  Future<Map<String, dynamic>> getPlaceDetail() async {
     final dio = Dio();
+    late String category;
 
     if (partName == '식음료') {
-      final res = await dio.get(
-          'http://www.pettravel.kr/api/detailSeqPart.do?partCode=PC01&contentNum=$contentSeq');
-      return res;
+      category = 'PC01';
     } else if (partName == '숙박') {
-      final res = await dio.get(
-          'http://www.pettravel.kr/api/detailSeqPart.do?partCode=PC02&contentNum=$contentSeq');
-      return res;
+      category = 'PC02';
     } else if (partName == '관광지') {
-      final res = await dio.get(
-          'http://www.pettravel.kr/api/detailSeqPart.do?partCode=PC03&contentNum=$contentSeq');
-      return res;
+      category = 'PC03';
     } else if (partName == '체험') {
-      final res = await dio.get(
-          'http://www.pettravel.kr/api/detailSeqPart.do?partCode=PC04&contentNum=$contentSeq');
-      return res;
+      category = 'PC04';
     } else if (partName == '동물병원') {
-      final res = await dio.get(
-          'http://www.pettravel.kr/api/detailSeqPart.do?partCode=PC05&contentNum=$contentSeq');
-      return res;
+      category = 'PC05';
     }
+
+    final res = await dio.get(
+        'http://www.pettravel.kr/api/detailSeqPart.do?partCode=$category&contentNum=$contentSeq');
+    // print(res.data[0]['resultList']);
+    return res.data[0]['resultList'];
   }
 
   const PlaceDetailScreen({
@@ -43,10 +40,16 @@ class PlaceDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-        child: FutureBuilder(
+        child: FutureBuilder<Map<String, dynamic>>(
       future: getPlaceDetail(),
-      builder: (_, snapshot) {
-        print(snapshot.data);
+      builder: (_, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+        // print(snapshot.data);
+        if (!snapshot.hasData) {
+          return Container();
+        }
+        final item = PlaceDetailModel.fromJson(
+          json: snapshot.data!,
+        );
         return CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
