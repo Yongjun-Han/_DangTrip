@@ -182,7 +182,10 @@ class _TripState extends State<Trip> {
                         return GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => const PlaceDetailScreen()));
+                                builder: (_) => PlaceDetailScreen(
+                                      contentSeq: parsedItem.contentSeq,
+                                      partName: parsedItem.partName,
+                                    )));
                           },
                           child: PlaceInfoCard(
                             contentSeq: parsedItem.contentSeq,
