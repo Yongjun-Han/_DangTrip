@@ -9,6 +9,7 @@ class PlaceDetailModel extends PlaceInfoModel {
       usedCost,
       dogBreed,
       parkingFlag,
+      policyCautions,
       imageList;
 
   // final List<PlaceIamgeModel> thumbs;
@@ -31,6 +32,7 @@ class PlaceDetailModel extends PlaceInfoModel {
     required this.dogBreed,
     required this.parkingFlag,
     required this.imageList,
+    required this.policyCautions,
   });
   factory PlaceDetailModel.fromJson({
     required Map<String, dynamic> json,
@@ -52,6 +54,7 @@ class PlaceDetailModel extends PlaceInfoModel {
         usedCost: json['usedCost'],
         dogBreed: json['dogBreed'],
         parkingFlag: json['parkingFlag'],
+        policyCautions: json['policyCautions'],
         imageList: json['imageList'][0]['image']
         // thumbs: json['thumbs'].map<PlaceIamgeModel>(
         //   (x) => PlaceIamgeModel(
