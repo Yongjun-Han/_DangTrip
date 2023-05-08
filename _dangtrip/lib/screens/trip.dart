@@ -19,11 +19,11 @@ class _TripState extends State<Trip> {
   Future<List> paginateData(String pcCode) async {
     final dio = Dio();
     //장소 데이터
-    final data = [];
+    final List data = [];
     //장소의 시퀀스 넘버 데이터
-    final seqArr = [];
+    final List seqArr = [];
     //장소의 썸네일 데이터
-    final thumbArr = [];
+    final List thumbArr = [];
 
     final res = await dio
         .get(
