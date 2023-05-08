@@ -45,7 +45,9 @@ class PlaceDetailScreen extends StatelessWidget {
       builder: (_, AsyncSnapshot<Map<String, dynamic>> snapshot) {
         // print(snapshot.data);
         if (!snapshot.hasData) {
-          return Container();
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
         final item = PlaceDetailModel.fromJson(
           json: snapshot.data!,

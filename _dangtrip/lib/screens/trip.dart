@@ -7,21 +7,58 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class Trip extends StatefulWidget {
-  const Trip({super.key});
+  const Trip({
+    super.key,
+  });
 
   @override
   State<Trip> createState() => _TripState();
 }
 
 class _TripState extends State<Trip> {
-  Future<List> paginateData() async {
+  Future<List> paginateData(String pcCode) async {
     final dio = Dio();
+    //장소 데이터
+    final data = [];
+    //장소의 시퀀스 넘버 데이터
+    final seqArr = [];
+    //장소의 썸네일 데이터
+    final thumbArr = [];
 
-    final res = await dio.get(
-        'https://www.pettravel.kr/api/listPart.do?page=1&pageBlock=10&partCode=PC01');
-    // print(res.data);
-    return res.data;
+    final res = await dio
+        .get(
+            'https://www.pettravel.kr/api/listPart.do?page=1&pageBlock=10&partCode=$pcCode')
+        .then((value) {
+      data.add(value.data!);
+      for (int i = 0; i < value.data![0]['resultList'].length; i++) {
+        seqArr.add(value.data![0]['resultList'][i]['contentSeq']);
+      }
+      return seqArr; //컨텐츠 시퀀스 번호 배열
+    }).then((value) async {
+      for (int i = 0; i < value.length; i++) {
+        final res2 = await dio
+            .get(
+                'http://www.pettravel.kr/api/detailSeqPart.do?partCode=$pcCode&contentNum=${value[i]}')
+            .then((value) {
+          // print(value.data[0]['resultList']['imageList'][0]['image']);
+          thumbArr.add(value.data[0]['resultList']['imageList'][0]['image']);
+          // print(thumbArr);
+          data.add(thumbArr);
+        });
+      }
+    });
+    // print(data[1]);
+    return data;
   }
+
+  // Future<String> thumbImage() async {
+  //   final dio = Dio();
+  //   final res = await dio.get(
+  //       'http://www.pettravel.kr/api/detailSeqPart.do?partCode=PC01&contentNum=15');
+  //   final thumbData = await res.data[0]['resultList']['imageList'][0]['image'];
+  //   print(thumbData);
+  //   return thumbData;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -165,18 +202,22 @@ class _TripState extends State<Trip> {
                 height: 24,
               ),
               FutureBuilder<List>(
-                future: paginateData(),
+                future: paginateData('PC01'),
                 builder: (context, AsyncSnapshot<List> snapshot) {
                   if (!snapshot.hasData) {
-                    return Container();
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
                   }
                   // print(snapshot.data![0]['resultList'].length);
                   // print(snapshot.data![0]['resultList'][0]);
                   return Expanded(
                     child: ListView.separated(
-                      itemCount: snapshot.data![0]['resultList'].length,
+                      itemCount: snapshot.data![0][0]['resultList'].length,
                       itemBuilder: (_, index) {
-                        final item = snapshot.data![0]['resultList'][index];
+                        final item = snapshot.data![0][0]['resultList'][index];
+                        print(snapshot.data![1]);
+                        final thumbItem = snapshot.data![1];
                         final parsedItem = PlaceInfoModel.fromJson(json: item);
                         //장소 카드 리스트의 카드
                         return GestureDetector(
@@ -189,8 +230,9 @@ class _TripState extends State<Trip> {
                           },
                           child: PlaceInfoCard(
                             contentSeq: parsedItem.contentSeq,
-                            image: Image.asset(
-                              'lib/assets/banner/detail_test.png',
+                            image: Image.network(
+                              thumbItem[index],
+                              // thumbImage() as String,
                               fit: BoxFit.cover,
                               height: 250,
                               width: MediaQuery.of(context).size.width,
