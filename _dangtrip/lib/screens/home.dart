@@ -1,6 +1,7 @@
 import 'package:_dangtrip/Common/Components/place_info_card.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
+import 'package:_dangtrip/screens/maps.dart';
 import 'package:_dangtrip/screens/trip.dart';
 import 'package:_dangtrip/widgets/banner_slide.dart';
 import 'package:flutter/material.dart';
@@ -83,11 +84,7 @@ class _HomeScreenState extends State<HomeScreen>
                 HomeBanner(),
               ],
             ),
-            Center(
-              child: Container(
-                child: const Text('주변'),
-              ),
-            ),
+            const Center(child: Maps()),
             const Trip(),
             Center(
               child: Container(
