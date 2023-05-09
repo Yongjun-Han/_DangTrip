@@ -218,7 +218,7 @@ class _TripState extends State<Trip> {
                         final item = snapshot.data![0][0]['resultList'][index];
                         print(snapshot.data![1]);
                         final thumbItem = snapshot.data![1];
-                        final parsedItem = PlaceInfoModel.fromJson(json: item);
+                        final parsedItem = PlaceInfoModel.fromJson(item);
                         //장소 카드 리스트의 카드
                         return GestureDetector(
                           onTap: () {
