@@ -1,5 +1,6 @@
 import 'package:_dangtrip/layout/default_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Maps extends StatefulWidget {
   const Maps({super.key});
@@ -13,7 +14,8 @@ class _MapsState extends State<Maps> {
   Widget build(BuildContext context) {
     return const DefaultLayout(
       title: '나의 주변',
-      child: Text('테스트'),
+      child: GoogleMap(
+          initialCameraPosition: CameraPosition(target: LatLng(0, 0))),
     );
   }
 }
