@@ -28,6 +28,7 @@ class _MapsState extends State<Maps> {
       child: NaverMap(
         onMapCreated: _onMapCreated,
         locationButtonEnable: true,
+        zoomGestureEnable: true,
         initialCameraPosition: const CameraPosition(
           target: LatLng(36.343856, 127.384891),
         ),
