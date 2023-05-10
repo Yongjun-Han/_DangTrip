@@ -11,6 +11,7 @@ const storage = FlutterSecureStorage();
 //플랫폼별  localhost
 const emulatorIp = '10.0.2.2:3000';
 const simulatorIp = '127.0.0.1:3000';
+// const simulatorIp = '192.168.132.2:56962';
 
 final ip = Platform.isIOS ? simulatorIp : emulatorIp;
 

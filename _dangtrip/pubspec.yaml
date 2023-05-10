@@ -21,8 +21,10 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   url_launcher: ^6.1.10
   json_annotation: ^4.8.0
-  naver_map_plugin: ^0.9.6
-  google_maps_flutter: ^2.2.6
+  naver_map_plugin:
+    git: https://github.com/LBSTECH/naver_map_plugin.git
+  # google_maps_flutter: ^2.2.6
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:
