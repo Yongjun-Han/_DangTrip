@@ -1,6 +1,11 @@
+import 'dart:async';
+
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:naver_map_plugin/naver_map_plugin.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+Completer<NaverMapController> _controller = Completer();
 
 class PlaceDetailCard extends StatelessWidget {
   //썸네일
@@ -22,6 +27,7 @@ class PlaceDetailCard extends StatelessWidget {
       latitude,
       longitude,
       parkingFlag;
+
   //주차여부
 
   const PlaceDetailCard({
@@ -48,6 +54,11 @@ class PlaceDetailCard extends StatelessWidget {
   onButtonTap() async {
     await launchUrlString(homePage);
   }
+
+  // void _onMapCreated(NaverMapController controller) {
+  //   if (_controller.isCompleted) _controller = Completer();
+  //   _controller.complete(controller);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -444,6 +455,22 @@ class PlaceDetailCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: const Color(0xfff1f1f1),
                       borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: NaverMap(
+                      markers: [
+                        Marker(
+                          markerId: title,
+                          position: LatLng(
+                            double.parse(latitude),
+                            double.parse(longitude),
+                          ),
+                        )
+                      ],
+                      scrollGestureEnable: true,
+                      initialCameraPosition: CameraPosition(
+                          zoom: 17,
+                          target: LatLng(
+                              double.parse(latitude), double.parse(longitude))),
                     ),
                   ),
                   const SizedBox(
