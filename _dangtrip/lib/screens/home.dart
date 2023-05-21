@@ -1,4 +1,3 @@
-import 'package:_dangtrip/Common/Components/place_info_card.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
 import 'package:_dangtrip/screens/maps.dart';
@@ -84,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen>
                 HomeBanner(),
               ],
             ),
-            const Center(child: Maps()),
+            Center(child: Maps()),
             const Trip(),
             Center(
               child: Container(

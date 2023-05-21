@@ -25,6 +25,8 @@ dependencies:
     git: https://github.com/LBSTECH/naver_map_plugin.git
   # google_maps_flutter: ^2.2.6
   geolocator: ^9.0.2
+  webview_flutter: ^4.2.0
+
 
 dev_dependencies:
   flutter_test:
