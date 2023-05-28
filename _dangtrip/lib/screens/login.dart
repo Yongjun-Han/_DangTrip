@@ -55,7 +55,7 @@ class _LoginState extends State<Login> {
                     child: TextButton(
                         onPressed: () async {},
                         child: const Text(
-                          '회원가입',
+                          '회원가입하기',
                           style: TextStyle(color: PRIMARY_COLOR),
                         )),
                   ),
