@@ -78,12 +78,12 @@ class _HomeScreenState extends State<HomeScreen>
           physics: const NeverScrollableScrollPhysics(),
           controller: controller,
           children: [
-            Column(
-              children: const [
+            const Column(
+              children: [
                 HomeBanner(),
               ],
             ),
-            Center(child: Maps()),
+            const Center(child: NaverMapTest()),
             const Trip(),
             Center(
               child: Container(
