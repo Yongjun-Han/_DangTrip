@@ -1,3 +1,4 @@
+import 'package:_dangtrip/layout/default_layout.dart';
 import 'package:flutter/material.dart';
 
 class Photo extends StatelessWidget {
@@ -5,6 +6,6 @@ class Photo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return const DefaultLayout(title: "댕생네컷", child: Center());
   }
 }

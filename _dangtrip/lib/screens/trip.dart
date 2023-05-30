@@ -1,6 +1,7 @@
 import 'package:_dangtrip/Common/Components/place_info_card.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/const/data.dart';
+import 'package:_dangtrip/Common/dio/dio.dart';
 import 'package:_dangtrip/model/place_model.dart';
 import 'package:_dangtrip/screens/place_detail_screen.dart';
 import 'package:dio/dio.dart';
@@ -24,6 +25,8 @@ class _TripState extends State<Trip> {
     final List seqArr = [];
     //장소의 썸네일 데이터
     final List thumbArr = [];
+
+    dio.interceptors.add(CustomInterceptor());
 
     final res = await dio
         .get(
@@ -50,15 +53,6 @@ class _TripState extends State<Trip> {
     // print(data[1]);
     return data;
   }
-
-  // Future<String> thumbImage() async {
-  //   final dio = Dio();
-  //   final res = await dio.get(
-  //       'http://www.pettravel.kr/api/detailSeqPart.do?partCode=PC01&contentNum=15');
-  //   final thumbData = await res.data[0]['resultList']['imageList'][0]['image'];
-  //   print(thumbData);
-  //   return thumbData;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -167,11 +161,11 @@ class _TripState extends State<Trip> {
                       color: const Color(0xffeeeeee),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
+                    child: const Padding(
+                      padding: EdgeInsets.only(
                           left: 20, top: 8, right: 16, bottom: 8),
                       child: Row(
-                        children: const [
+                        children: [
                           Text("견종"),
                           Icon(Icons.arrow_drop_down_rounded)
                         ],
@@ -183,8 +177,8 @@ class _TripState extends State<Trip> {
                       foregroundColor: PRIMARY_COLOR,
                     ),
                     onPressed: () {},
-                    child: Row(
-                      children: const [
+                    child: const Row(
+                      children: [
                         Text(
                           "거리순",
                           style: TextStyle(color: PRIMARY_COLOR),
@@ -216,7 +210,7 @@ class _TripState extends State<Trip> {
                       itemCount: snapshot.data![0][0]['resultList'].length,
                       itemBuilder: (_, index) {
                         final item = snapshot.data![0][0]['resultList'][index];
-                        print(snapshot.data![1]);
+                        // print(snapshot.data![1]);
                         final thumbItem = snapshot.data![1];
                         final parsedItem = PlaceInfoModel.fromJson(item);
                         //장소 카드 리스트의 카드

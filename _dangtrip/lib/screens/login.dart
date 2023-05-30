@@ -135,62 +135,6 @@ class _LoginState extends State<Login> {
                             builder: (_) => const HomeScreen(),
                           ),
                         );
-
-                        // showModalBottomSheet(
-                        //   context: context,
-                        //   builder: (BuildContext context) {
-                        //     return Container(
-                        //       height: 360,
-                        //       decoration: const BoxDecoration(
-                        //         color: Colors.white,
-                        //       ),
-                        //       child: Column(
-                        //         children: [
-                        //           Container(
-                        //             height: 32,
-                        //             decoration: const BoxDecoration(
-                        //               color: Colors.black,
-                        //             ),
-                        //             child: Row(
-                        //               mainAxisAlignment: MainAxisAlignment.end,
-                        //               children: const [
-                        //                 Icon(
-                        //                   Icons
-                        //                       .check_box_outline_blank_outlined,
-                        //                   color: Colors.white54,
-                        //                 ),
-                        //                 SizedBox(
-                        //                   width: 8,
-                        //                 ),
-                        //                 Text(
-                        //                   '오늘하루 그만보기',
-                        //                   style: TextStyle(
-                        //                     fontWeight: FontWeight.bold,
-                        //                     color: Colors.white54,
-                        //                   ),
-                        //                 ),
-                        //                 SizedBox(
-                        //                   width: 20,
-                        //                 ),
-                        //               ],
-                        //             ),
-                        //           ),
-                        //           Expanded(
-                        //             child: Container(
-                        //               decoration: const BoxDecoration(
-                        //                 color: Colors.white,
-                        //               ),
-                        //               child: Image.asset(
-                        //                 'lib/assets/event/kanu_dog.jpg',
-                        //                 fit: BoxFit.fill,
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     );
-                        //   },
-                        // );
                       },
                       child: const CustomButton(
                         buttonTitle: '로그인',

@@ -1,6 +1,8 @@
 import 'package:_dangtrip/Common/const/colors.dart';
+import 'package:_dangtrip/Common/restaurant/view/restaurant_screen.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
 import 'package:_dangtrip/screens/maps.dart';
+import 'package:_dangtrip/screens/photo.dart';
 import 'package:_dangtrip/screens/trip.dart';
 import 'package:_dangtrip/widgets/banner_slide.dart';
 import 'package:flutter/material.dart';
@@ -68,8 +70,8 @@ class _HomeScreenState extends State<HomeScreen>
               label: '댕생네컷',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border_outlined),
-              label: 'MY',
+              icon: Icon(Icons.delivery_dining_outlined),
+              label: '주문',
             ),
           ],
         ),
@@ -77,24 +79,16 @@ class _HomeScreenState extends State<HomeScreen>
           //좌우 스크롤 고정
           physics: const NeverScrollableScrollPhysics(),
           controller: controller,
-          children: [
-            const Column(
+          children: const [
+            Column(
               children: [
                 HomeBanner(),
               ],
             ),
-            const Center(child: NaverMapTest()),
-            const Trip(),
-            Center(
-              child: Container(
-                child: const Text('댕생네컷'),
-              ),
-            ),
-            Center(
-              child: Container(
-                child: const Text('MY'),
-              ),
-            ),
+            NaverMapTest(),
+            Trip(),
+            Photo(),
+            RestaurantScreen(),
           ],
         ));
   }
