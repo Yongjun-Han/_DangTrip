@@ -1,33 +1,100 @@
+import 'package:_dangtrip/Common/const/data.dart';
 import 'package:_dangtrip/Common/restaurant/component/product_card.dart';
 import 'package:_dangtrip/Common/restaurant/component/restaurant_card.dart';
+import 'package:_dangtrip/Common/restaurant/model/restaurant_detail_model.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class RestaurantDeatilScreen extends StatelessWidget {
-  const RestaurantDeatilScreen({super.key});
+  final String id;
+
+  const RestaurantDeatilScreen({
+    required this.id,
+    super.key,
+  });
+
+  Future<Map<String, dynamic>> getRestaurantDetail() async {
+    final dio = Dio();
+    final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+    final res = await dio.get(
+      "http://$ip/restaurant/$id",
+      options: Options(
+        headers: {
+          "authorization": "Bearer $accessToken",
+        },
+      ),
+    );
+    return res.data;
+  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      title: "불타는 떡볶이",
-      child: Column(
-        children: [
-          RestaurantCard(
-            image: Image.asset("lib/assets/banner/AD_3.png"),
-            name: "청정해",
-            tags: const ["스시", "연어", "일식"],
-            ratingsCount: 120,
-            deliveryTime: 30,
-            deliveryFee: 0,
-            ratings: 4.99,
-            isDetail: true,
-            detail: "존맛탱 초밥",
+        title: "불타는 떡볶이",
+        child: FutureBuilder<Map<String, dynamic>>(
+            future: getRestaurantDetail(),
+            builder: (_, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              final item = RestaurantDetailModel.fromJson(
+                json: snapshot.data!,
+              );
+              return CustomScrollView(
+                slivers: [
+                  renderTop(
+                    model: item,
+                  ),
+                  renderLabel(),
+                  renderProducts(),
+                ],
+              );
+            }));
+  }
+
+  SliverToBoxAdapter renderTop({
+    required RestaurantDetailModel model,
+  }) {
+    return SliverToBoxAdapter(
+      child: RestaurantCard.fromModel(
+        model: model,
+        isDetail: true,
+      ),
+    );
+  }
+
+  SliverPadding renderProducts() {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            return const Padding(
+              padding: EdgeInsets.only(bottom: 16),
+              child: ProductCard(),
+            );
+          },
+          childCount: 10,
+        ),
+      ),
+    );
+  }
+
+  SliverPadding renderLabel() {
+    return const SliverPadding(
+      padding: EdgeInsets.only(left: 16, bottom: 16),
+      sliver: SliverToBoxAdapter(
+        child: Text(
+          "메뉴",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: ProductCard(),
-          )
-        ],
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:_dangtrip/Common/const/colors.dart';
+import 'package:_dangtrip/Common/restaurant/model/restaurant_detail_model.dart';
 import 'package:_dangtrip/Common/restaurant/model/restaurant_model.dart';
 import 'package:flutter/material.dart';
 
@@ -47,6 +48,7 @@ class RestaurantCard extends StatelessWidget {
       deliveryFee: model.deliveryFee,
       ratings: model.ratings,
       isDetail: isDetail,
+      detail: model is RestaurantDetailModel ? model.detail : null,
     );
   }
 
@@ -68,15 +70,23 @@ class RestaurantCard extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: isDetail ? 16 : 4),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    name,
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
+                  if (!isDetail)
+                    Text(
+                      name,
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  if (isDetail)
+                    Text(
+                      name,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
                   Text(
                     ratings.toString(),
                     style: const TextStyle(fontWeight: FontWeight.w500),
@@ -96,14 +106,14 @@ class RestaurantCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 8,
+                height: 10,
               ),
               Row(
                 children: [
-                  _IconText(
-                    icon: Icons.star,
-                    label: ratings.toString(),
-                  ),
+                  // _IconText(
+                  //   icon: Icons.star,
+                  //   label: ratings.toString(),
+                  // ),
                   _IconText(
                     icon: Icons.receipt,
                     label: ratingsCount.toString(),
@@ -123,7 +133,9 @@ class RestaurantCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                     vertical: 24,
                   ),
-                  child: Text(detail!),
+                  child: Text(
+                    detail!,
+                  ),
                 ),
             ],
           ),
