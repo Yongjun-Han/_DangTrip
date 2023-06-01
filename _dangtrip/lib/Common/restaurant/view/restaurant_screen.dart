@@ -13,6 +13,7 @@ class RestaurantScreen extends StatelessWidget {
   Future<List> pagenateRestaurant() async {
     final dio = Dio();
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+    print(accessToken);
     dio.interceptors.add(CustomInterceptor());
     final res = await dio.get(
       "http://$ip/restaurant",
@@ -44,9 +45,7 @@ class RestaurantScreen extends StatelessWidget {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (_, index) {
                   final item = snapshot.data![index];
-                  final parsedItem = RestaurantModel.fromJson(
-                    json: item,
-                  );
+                  final parsedItem = RestaurantModel.fromJson(item);
                   return GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(

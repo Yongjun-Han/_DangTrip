@@ -1,9 +1,22 @@
+import 'package:_dangtrip/Common/Utils/data_utils.dart';
 import 'package:_dangtrip/Common/const/data.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'restaurant_model.g.dart';
 
-enum RestaurantPriceRange { expensive, medium, cheap }
+enum RestaurantPriceRange {
+  expensive,
+  medium,
+  cheap,
+}
 
+@JsonSerializable()
 class RestaurantModel {
-  final String id, name, thumbUrl;
+  final String id, name;
+  @JsonKey(
+    fromJson: DataUtils.pathToUrl,
+    // toJson: ,
+  )
+  final String thumbUrl;
   final List<String> tags;
   final RestaurantPriceRange priceRange;
   final double ratings;
@@ -21,21 +34,13 @@ class RestaurantModel {
     required this.deliveryTime,
   });
 
-  factory RestaurantModel.fromJson({
-    required Map<String, dynamic> json,
-  }) {
-    return RestaurantModel(
-      id: json['id'],
-      name: json['name'],
-      thumbUrl: "http://$ip/${json['thumbUrl']}",
-      tags: List<String>.from(json['tags']),
-      priceRange: RestaurantPriceRange.values.firstWhere(
-        (e) => e.name == json['priceRange'],
-      ),
-      ratings: json['ratings'],
-      ratingsCount: json['ratingsCount'],
-      deliveryFee: json['deliveryFee'],
-      deliveryTime: json['deliveryTime'],
-    );
-  }
+  factory RestaurantModel.fromJson(Map<String, dynamic> json) =>
+      _$RestaurantModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RestaurantModelToJson(this);
+
+  static pathToUrl(String value) {
+    //value 는 jsonkey 를 적용해줄 thumbUrl
+    return "http://$ip/$value";
+  } // factory RestaurantModel.fromJson({
 }

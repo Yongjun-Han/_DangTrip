@@ -1,7 +1,11 @@
 //레스토랑 페이지와 디테일 페이지는 겹치는 내용이 많음 -> extends
-import 'package:_dangtrip/Common/const/data.dart';
-import 'package:_dangtrip/Common/restaurant/model/restaurant_model.dart';
 
+import 'package:_dangtrip/Common/Utils/data_utils.dart';
+import 'package:_dangtrip/Common/restaurant/model/restaurant_model.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'restaurant_detail_model.g.dart';
+
+@JsonSerializable()
 class RestaurantDetailModel extends RestaurantModel {
   final String detail;
   final List<RestaurantProductModel> products;
@@ -19,33 +23,18 @@ class RestaurantDetailModel extends RestaurantModel {
     required this.detail,
     required this.products,
   });
-  factory RestaurantDetailModel.fromJson({
-    required Map<String, dynamic> json,
-  }) {
-    return RestaurantDetailModel(
-      id: json["id"],
-      name: json["name"],
-      thumbUrl: "http://$ip/${json['thumbUrl']}",
-      tags: List<String>.from(json['tags']),
-      priceRange: RestaurantPriceRange.values.firstWhere(
-        (e) => e.name == json['priceRange'],
-      ),
-      ratings: json["ratings"],
-      ratingsCount: json["ratingsCount"],
-      deliveryFee: json["deliveryFee"],
-      deliveryTime: json["deliveryTime"],
-      detail: json["detail"],
-      products: json["products"]
-          .map<RestaurantProductModel>(
-            (x) => RestaurantProductModel.fromJson(json: x),
-          )
-          .toList(),
-    );
-  }
+
+  factory RestaurantDetailModel.fromJson(Map<String, dynamic> json) =>
+      _$RestaurantDetailModelFromJson(json);
 }
 
+@JsonSerializable()
 class RestaurantProductModel {
-  final String id, name, imgUrl, detail;
+  final String id, name, detail;
+  @JsonKey(
+    fromJson: DataUtils.pathToUrl,
+  )
+  final String imgUrl;
   final int price;
   RestaurantProductModel({
     required this.id,
@@ -55,15 +44,6 @@ class RestaurantProductModel {
     required this.price,
   });
 
-  factory RestaurantProductModel.fromJson({
-    required Map<String, dynamic> json,
-  }) {
-    return RestaurantProductModel(
-      id: json['id'],
-      name: json['name'],
-      imgUrl: "http://$ip${json['imgUrl']}",
-      detail: json['detail'],
-      price: json['price'],
-    );
-  }
+  factory RestaurantProductModel.fromJson(Map<String, dynamic> json) =>
+      _$RestaurantProductModelFromJson(json);
 }
