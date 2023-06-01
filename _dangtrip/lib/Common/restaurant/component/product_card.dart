@@ -1,8 +1,35 @@
 import 'package:_dangtrip/Common/const/colors.dart';
+import 'package:_dangtrip/Common/restaurant/model/restaurant_detail_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key});
+  final Image image;
+  final String name, detail;
+  final int price;
+
+  const ProductCard({
+    required this.image,
+    required this.name,
+    required this.detail,
+    required this.price,
+    super.key,
+  });
+
+  factory ProductCard.fromModel({
+    required RestaurantProductModel model,
+  }) {
+    return ProductCard(
+      image: Image.network(
+        model.imgUrl,
+        fit: BoxFit.cover,
+        width: 110,
+        height: 110,
+      ),
+      name: model.name,
+      detail: model.detail,
+      price: model.price,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,42 +39,37 @@ class ProductCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
-            child: Image.asset(
-              "lib/assets/banner/AD_3.png",
-              fit: BoxFit.cover,
-              width: 110,
-              height: 110,
-            ),
+            child: image,
           ),
           const SizedBox(
             width: 16,
           ),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "대왕연어초밥",
-                  style: TextStyle(
+                  name,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  "연어초밥의 정석연어초밥의 정석연어초밥의 정석연어초밥의 정석 정석정석연어초밥의 정석 정석정석연어초밥의 정석 정석정석연어초밥의 정석 정석",
+                  detail,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: TEXT_SUB,
                   ),
                 ),
                 Text(
-                  "14000원",
+                  price.toString(),
                   textAlign: TextAlign.right,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: PRIMARY_COLOR,

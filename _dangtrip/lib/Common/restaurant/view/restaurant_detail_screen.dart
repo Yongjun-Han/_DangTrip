@@ -1,4 +1,5 @@
 import 'package:_dangtrip/Common/const/data.dart';
+import 'package:_dangtrip/Common/dio/dio.dart';
 import 'package:_dangtrip/Common/restaurant/component/product_card.dart';
 import 'package:_dangtrip/Common/restaurant/component/restaurant_card.dart';
 import 'package:_dangtrip/Common/restaurant/model/restaurant_detail_model.dart';
@@ -16,6 +17,7 @@ class RestaurantDeatilScreen extends StatelessWidget {
 
   Future<Map<String, dynamic>> getRestaurantDetail() async {
     final dio = Dio();
+    dio.interceptors.add(CustomInterceptor());
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
     final res = await dio.get(
       "http://$ip/restaurant/$id",
@@ -50,7 +52,7 @@ class RestaurantDeatilScreen extends StatelessWidget {
                     model: item,
                   ),
                   renderLabel(),
-                  renderProducts(),
+                  renderProducts(products: item.products),
                 ],
               );
             }));
@@ -67,18 +69,20 @@ class RestaurantDeatilScreen extends StatelessWidget {
     );
   }
 
-  SliverPadding renderProducts() {
+  SliverPadding renderProducts(
+      {required List<RestaurantProductModel> products}) {
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
-            return const Padding(
-              padding: EdgeInsets.only(bottom: 16),
-              child: ProductCard(),
+            final model = products[index];
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: ProductCard.fromModel(model: model),
             );
           },
-          childCount: 10,
+          childCount: products.length,
         ),
       ),
     );
