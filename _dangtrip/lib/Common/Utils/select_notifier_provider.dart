@@ -30,7 +30,9 @@ class SelectNotifier extends StateNotifier<List<CategoryModel>> {
           ),
         ]);
 
-  void isSelected({required String name}) {
+  void isSelected({
+    required String name,
+  }) {
     state = state
         .map(
           (e) => e.name == name
@@ -38,25 +40,14 @@ class SelectNotifier extends StateNotifier<List<CategoryModel>> {
                   name: e.name,
                   isSelected: !e.isSelected,
                 )
-              : e,
+              : CategoryModel(
+                  name: e.name,
+                  isSelected: false,
+                ),
         )
         .toList();
   }
 }
-
-  // void isReleased({required String name}) {
-  //   state = state
-  //       .map(
-  //         (e) => e.name == name
-  //             ? e
-  //             : CategoryModel(
-  //                 name: e.name,
-  //                 isSelected: !e.isSelected,
-  //               ),
-  //       )
-  //       .toList();
-  // }
-
 
 // final List<String> category = [
 //   '식음료',
