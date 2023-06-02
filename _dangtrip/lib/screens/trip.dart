@@ -1,4 +1,5 @@
 import 'package:_dangtrip/Common/Components/place_info_card.dart';
+import 'package:_dangtrip/Common/Utils/place_provider.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/const/data.dart';
 import 'package:_dangtrip/Common/dio/dio.dart';
@@ -6,17 +7,13 @@ import 'package:_dangtrip/model/place_model.dart';
 import 'package:_dangtrip/screens/place_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Trip extends StatefulWidget {
+class Trip extends ConsumerWidget {
   const Trip({
     super.key,
   });
 
-  @override
-  State<Trip> createState() => _TripState();
-}
-
-class _TripState extends State<Trip> {
   Future<List> paginateData(String pcCode) async {
     final dio = Dio();
     //장소 데이터
@@ -48,6 +45,7 @@ class _TripState extends State<Trip> {
           // print(thumbArr);
           data.add(thumbArr);
         });
+        print(res2);
       }
     });
     // print(data[1]);
@@ -55,7 +53,11 @@ class _TripState extends State<Trip> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(categoryProvider);
+    final bool isSelected;
+    // final String placeCat;
+
     return Center(
       child: SafeArea(
         child: Padding(
@@ -102,12 +104,28 @@ class _TripState extends State<Trip> {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          print(category[index]);
+                          ref.read(categoryProvider.notifier).update(
+                            (state) {
+                              late String placecategory;
+                              if (category[index] == '식음료') {
+                                placecategory = 'PC01';
+                              } else if (category[index] == '숙박') {
+                                placecategory = 'PC02';
+                              } else if (category[index] == '관광지') {
+                                placecategory = 'PC03';
+                              } else if (category[index] == '체험') {
+                                placecategory = 'PC04';
+                              } else if (category[index] == '동물병원') {
+                                placecategory = 'PC05';
+                              }
+                              return placecategory;
+                            },
+                          );
                         },
                         child: Container(
                           height: 40,
                           decoration: BoxDecoration(
-                            color: const Color(0xffeeeeee),
+                            color: const Color.fromARGB(255, 214, 214, 214),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Padding(
@@ -196,7 +214,7 @@ class _TripState extends State<Trip> {
                 height: 24,
               ),
               FutureBuilder<List>(
-                future: paginateData('PC01'),
+                future: paginateData(state),
                 builder: (context, AsyncSnapshot<List> snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(

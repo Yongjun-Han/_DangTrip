@@ -18,7 +18,7 @@ abstract class RestaurantRepository {
   @GET("/{id}") // == :id
   @Headers({
     "authorization":
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNjg1NjE4MjQyLCJleHAiOjE2ODU2MTg1NDJ9.b1co-99WL7Q_IvGPDO7fTW1bVsbrmYbC1R4YEkZKPvA"
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNjg1Njg3NDM1LCJleHAiOjE2ODU2ODc3MzV9.NRyVUI0yZGCTKP5y_B-TVn-j-dy75VcNGARGYeCon0g"
   })
   Future<RestaurantDetailModel> getRestaurantDetail({
     //path에 대체할 변수를 지정, 이름이 다르다면 @Path 안에 어떤 젼수를 지정할지 표기
