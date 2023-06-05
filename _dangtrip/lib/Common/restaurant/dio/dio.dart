@@ -8,11 +8,11 @@ class DioIntercepter extends Interceptor {
   DioIntercepter({
     required this.storage,
   });
-
+  //요청을 보낼때
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    print("REQ ${options.method} ${options.uri}");
+    print("[REQ] ${options.method} ${options.uri}");
 
     // 만약 요청의 헤더에 true 값이 있다면
     if (options.headers['accessToken'] == "true") {
@@ -42,7 +42,7 @@ class DioIntercepter extends Interceptor {
   //401 에러가 낫을때 토큰을 재발급 받아서 다시 새로운 요청으로 보낸다 .
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) async {
-    print("ERROR ${err.requestOptions.method} ${err.requestOptions.uri}");
+    print("[ERROR] ${err.requestOptions.method} ${err.requestOptions.uri}");
 
     final refreshToken = storage.read(key: REFRESH_TOKEN_KEY);
     //만약 리프레쉬 토큰이 없다면 에러발생
@@ -85,5 +85,13 @@ class DioIntercepter extends Interceptor {
     }
     //토큰과 관련된 에러가 아니라면 reject
     return handler.reject(err);
+  }
+
+  //응답을 받을때
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    print(
+        "[RES] ${response.requestOptions.method} ${response.requestOptions.uri}");
+    return super.onResponse(response, handler);
   }
 }
