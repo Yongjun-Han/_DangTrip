@@ -13,7 +13,6 @@ class RestaurantScreen extends StatelessWidget {
   Future<List> pagenateRestaurant() async {
     final dio = Dio();
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
-    print(accessToken);
     dio.interceptors.add(CustomInterceptor());
     final res = await dio.get(
       "http://$ip/restaurant",

@@ -1,6 +1,7 @@
 import 'package:_dangtrip/Common/const/data.dart';
 import 'package:_dangtrip/Common/restaurant/component/product_card.dart';
 import 'package:_dangtrip/Common/restaurant/component/restaurant_card.dart';
+import 'package:_dangtrip/Common/restaurant/dio/dio.dart';
 import 'package:_dangtrip/Common/restaurant/model/restaurant_detail_model.dart';
 import 'package:_dangtrip/Common/restaurant/repository/restaurant_repository.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
@@ -17,6 +18,11 @@ class RestaurantDeatilScreen extends StatelessWidget {
 
   Future<RestaurantDetailModel> getRestaurantDetail() async {
     final dio = Dio();
+    dio.interceptors.add(
+      DioIntercepter(
+        storage: storage,
+      ),
+    );
     final repository =
         RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant');
     return repository.getRestaurantDetail(id: id);
