@@ -1,6 +1,5 @@
-import 'package:_dangtrip/Common/const/data.dart';
+import 'package:_dangtrip/Common/model/cursor_pagination_model.dart';
 import 'package:_dangtrip/Common/restaurant/component/restaurant_card.dart';
-import 'package:_dangtrip/Common/restaurant/dio/dio.dart';
 import 'package:_dangtrip/Common/restaurant/model/restaurant_model.dart';
 import 'package:_dangtrip/Common/restaurant/repository/restaurant_repository.dart';
 import 'package:_dangtrip/Common/restaurant/view/restaurant_detail_screen.dart';
@@ -11,16 +10,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class RestaurantScreen extends ConsumerWidget {
   const RestaurantScreen({super.key});
 
-  Future<List<RestaurantModel>> pagenateRestaurant(WidgetRef ref) async {
-    final dio = ref.watch(dioProvider);
-
-    final res =
-        await RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant')
-            .paginate();
-
-    return res.data;
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return DefaultLayout(
@@ -28,18 +17,19 @@ class RestaurantScreen extends ConsumerWidget {
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: FutureBuilder<List<RestaurantModel>>(
-            future: pagenateRestaurant(ref),
-            builder: (context, AsyncSnapshot<List<RestaurantModel>> snapshot) {
+          child: FutureBuilder<CursorPagintion<RestaurantModel>>(
+            future: ref.watch(restaurantRepositoryProvider).paginate(),
+            builder: (context,
+                AsyncSnapshot<CursorPagintion<RestaurantModel>> snapshot) {
               if (!snapshot.hasData) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
               return ListView.separated(
-                itemCount: snapshot.data!.length,
+                itemCount: snapshot.data!.data.length,
                 itemBuilder: (_, index) {
-                  final parsedItem = snapshot.data![index];
+                  final parsedItem = snapshot.data!.data[index];
                   return GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(
