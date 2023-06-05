@@ -3,7 +3,6 @@ import 'package:_dangtrip/Common/Utils/cateModel.dart';
 import 'package:_dangtrip/Common/Utils/place_provider.dart';
 import 'package:_dangtrip/Common/Utils/select_notifier_provider.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
-import 'package:_dangtrip/Common/dio/dio.dart';
 import 'package:_dangtrip/model/place_model.dart';
 import 'package:_dangtrip/screens/place_detail_screen.dart';
 import 'package:dio/dio.dart';
@@ -23,8 +22,6 @@ class Trip extends ConsumerWidget {
     final List seqArr = [];
     //장소의 썸네일 데이터
     final List thumbArr = [];
-
-    dio.interceptors.add(CustomInterceptor());
 
     final res = await dio
         .get(

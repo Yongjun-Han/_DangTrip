@@ -1,4 +1,3 @@
-import 'package:_dangtrip/Common/dio/dio.dart';
 import 'package:_dangtrip/model/place_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,8 +15,6 @@ class PlaceStateNotifier extends StateNotifier<List<PlaceInfoModel>> {
     final List seqArr = [];
     //장소의 썸네일 데이터
     final List thumbArr = [];
-
-    dio.interceptors.add(CustomInterceptor());
 
     final res = await dio
         .get(

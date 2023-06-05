@@ -1,5 +1,6 @@
 import 'package:_dangtrip/Common/const/data.dart';
 import 'package:_dangtrip/Common/restaurant/component/restaurant_card.dart';
+import 'package:_dangtrip/Common/restaurant/dio/dio.dart';
 import 'package:_dangtrip/Common/restaurant/model/restaurant_model.dart';
 import 'package:_dangtrip/Common/restaurant/view/restaurant_detail_screen.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
@@ -11,6 +12,10 @@ class RestaurantScreen extends StatelessWidget {
 
   Future<List> pagenateRestaurant() async {
     final dio = Dio();
+    dio.interceptors.add(
+      DioIntercepter(storage: storage),
+    );
+
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
     final res = await dio.get(
       "http://$ip/restaurant",

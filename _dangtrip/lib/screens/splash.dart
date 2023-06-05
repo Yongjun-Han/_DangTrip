@@ -1,6 +1,5 @@
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/const/data.dart';
-import 'package:_dangtrip/Common/dio/dio.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
 import 'package:_dangtrip/screens/home.dart';
 import 'package:_dangtrip/screens/login.dart';
@@ -31,7 +30,6 @@ class _SplashScreenState extends State<SplashScreen> {
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
 
     final dio = Dio();
-    dio.interceptors.add(CustomInterceptor());
 
     try {
       final res = await dio.post(

@@ -1,5 +1,4 @@
 import 'package:_dangtrip/Common/Components/place_detail_card.dart';
-import 'package:_dangtrip/Common/dio/dio.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
 import 'package:_dangtrip/model/place_detail_model.dart';
 import 'package:dio/dio.dart';
@@ -25,8 +24,6 @@ class PlaceDetailScreen extends StatelessWidget {
     } else if (partName == '동물병원') {
       category = 'PC05';
     }
-
-    dio.interceptors.add(CustomInterceptor());
 
     final res = await dio.get(
         'http://www.pettravel.kr/api/detailSeqPart.do?partCode=$category&contentNum=$contentSeq');
