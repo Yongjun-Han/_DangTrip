@@ -5,10 +5,10 @@ import 'package:_dangtrip/Common/restaurant/dio/dio.dart';
 import 'package:_dangtrip/Common/restaurant/model/restaurant_detail_model.dart';
 import 'package:_dangtrip/Common/restaurant/repository/restaurant_repository.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RestaurantDeatilScreen extends StatelessWidget {
+class RestaurantDeatilScreen extends ConsumerWidget {
   final String id;
 
   const RestaurantDeatilScreen({
@@ -16,24 +16,20 @@ class RestaurantDeatilScreen extends StatelessWidget {
     super.key,
   });
 
-  Future<RestaurantDetailModel> getRestaurantDetail() async {
-    final dio = Dio();
-    dio.interceptors.add(
-      DioIntercepter(
-        storage: storage,
-      ),
-    );
+  Future<RestaurantDetailModel> getRestaurantDetail(WidgetRef ref) async {
+    final dio = ref.watch(dioProvider);
+
     final repository =
         RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant');
     return repository.getRestaurantDetail(id: id);
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return DefaultLayout(
         title: "불타는 떡볶이",
         child: FutureBuilder<RestaurantDetailModel>(
-            future: getRestaurantDetail(),
+            future: getRestaurantDetail(ref),
             builder: (_, AsyncSnapshot<RestaurantDetailModel> snapshot) {
               if (!snapshot.hasData) {
                 return const Center(

@@ -4,21 +4,23 @@ import 'package:_dangtrip/Common/Components/custom_button.dart';
 import 'package:_dangtrip/Common/Components/text_input.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/const/data.dart';
+import 'package:_dangtrip/Common/secure/secure_storage.dart';
 import 'package:_dangtrip/screens/home.dart';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../layout/default_layout.dart';
 
-class Login extends StatefulWidget {
+class Login extends ConsumerStatefulWidget {
   const Login({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  ConsumerState<Login> createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends ConsumerState<Login> {
   //아이디
   String username = '';
   //비밀번호
@@ -124,6 +126,8 @@ class _LoginState extends State<Login> {
 
                         final refreshToken = res.data['refreshToken'];
                         final accessToken = res.data['accessToken'];
+
+                        final storage = ref.read(secureStorageProvider);
 
                         await storage.write(
                             key: REFRESH_TOKEN_KEY, value: refreshToken);
