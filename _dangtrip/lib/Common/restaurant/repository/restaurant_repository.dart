@@ -1,5 +1,6 @@
 import 'package:_dangtrip/Common/const/data.dart';
 import 'package:_dangtrip/Common/model/cursor_pagination_model.dart';
+import 'package:_dangtrip/Common/model/pagination_params.dart';
 import 'package:_dangtrip/Common/restaurant/dio/dio.dart';
 import 'package:_dangtrip/Common/restaurant/model/restaurant_detail_model.dart';
 import 'package:_dangtrip/Common/restaurant/model/restaurant_model.dart';
@@ -27,7 +28,9 @@ abstract class RestaurantRepository {
   @Headers({
     "accessToken": "true",
   })
-  Future<CursorPagintion<RestaurantModel>> paginate();
+  Future<CursorPagintion<RestaurantModel>> paginate({
+    @Queries() PaginationParams? paginationParams = const PaginationParams(),
+  });
 
 //http://$ip/restaurant/:id
   @GET("/{id}") // 요청타입 대문자로  :id

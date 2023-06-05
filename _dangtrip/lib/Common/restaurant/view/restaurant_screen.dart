@@ -1,3 +1,4 @@
+import 'package:_dangtrip/Common/model/cursor_pagination_model.dart';
 import 'package:_dangtrip/Common/restaurant/component/restaurant_card.dart';
 import 'package:_dangtrip/Common/restaurant/provider/restaurant_provider.dart';
 import 'package:_dangtrip/Common/restaurant/view/restaurant_detail_screen.dart';
@@ -11,20 +12,23 @@ class RestaurantScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(restaurantProvider);
-    if (data.isEmpty) {
+    if (data is CursorPagintionLoading) {
       return const Center(
         child: CircularProgressIndicator(),
       );
     }
+
+    final cp = data as CursorPagintion;
+
     return DefaultLayout(
       title: "딜리버리",
       child: Center(
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: ListView.separated(
-              itemCount: data.length,
+              itemCount: cp.data.length,
               itemBuilder: (_, index) {
-                final parsedItem = data[index];
+                final parsedItem = cp.data[index];
                 return GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
