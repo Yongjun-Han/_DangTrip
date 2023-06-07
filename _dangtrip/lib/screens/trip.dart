@@ -34,11 +34,11 @@ class Trip extends ConsumerWidget {
       }
       return seqArr; //contentSeq리스트
     }).then((value) async {
-      print(value);
       //value = seqArr
+      //동물병원데이터는 api 에서 썸내일 이미지를 제공 x --> 예시미이지로 대체
       if (pcCode == 'PC05') {
         for (int i = 0; i < value.length; i++) {
-          final res3 = await dio
+          await dio
               .get(
                   'http://www.pettravel.kr/api/detailSeqPart.do?partCode=$pcCode&contentNum=${value[i]}')
               .then((value) {
@@ -49,7 +49,7 @@ class Trip extends ConsumerWidget {
         }
       } else {
         for (int i = 0; i < value.length; i++) {
-          final res2 = await dio
+          await dio
               .get(
                   'http://www.pettravel.kr/api/detailSeqPart.do?partCode=$pcCode&contentNum=${value[i]}')
               .then((value) {
@@ -57,7 +57,6 @@ class Trip extends ConsumerWidget {
             thumbArr.add(value.data[0]['resultList']['imageList'][0]['image']);
             data.add(thumbArr); // 썸네일 데이터 추가
           });
-          print(data);
         }
       }
     });
@@ -70,7 +69,6 @@ class Trip extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(categoryProvider);
     final List<CategoryModel> selectState = ref.watch(selectProvider);
-    bool isPC05 = false;
 
     return Center(
       child: SafeArea(
@@ -126,19 +124,14 @@ class Trip extends ConsumerWidget {
                                     late String placecategory;
                                     if (e.name == '식음료') {
                                       placecategory = 'PC01';
-                                      isPC05 = false;
                                     } else if (e.name == '숙박') {
                                       placecategory = 'PC02';
-                                      isPC05 = false;
                                     } else if (e.name == '관광지') {
                                       placecategory = 'PC03';
-                                      isPC05 = false;
                                     } else if (e.name == '체험') {
                                       placecategory = 'PC04';
-                                      isPC05 = false;
                                     } else if (e.name == '동물병원') {
                                       placecategory = 'PC05';
-                                      isPC05 = true;
                                     }
                                     return placecategory;
                                   },
