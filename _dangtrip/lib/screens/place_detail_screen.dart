@@ -61,12 +61,6 @@ class PlaceDetailScreen extends StatelessWidget {
                 image: PlaceImageSlider(
                   imageList: item.imageList,
                 ),
-                // Image.network(
-                //   item.imageList.toString(),
-                //   width: MediaQuery.of(context).size.width,
-                //   height: 350,
-                //   fit: BoxFit.cover,
-                // ),
                 title: item.title,
                 areaName: item.areaName,
                 partName: item.partName,
