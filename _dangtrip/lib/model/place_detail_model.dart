@@ -1,5 +1,8 @@
 import 'package:_dangtrip/model/place_model.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'place_detail_model.g.dart';
 
+@JsonSerializable()
 class PlaceDetailModel extends PlaceInfoModel {
   final String keyword,
       usedTime,
@@ -9,8 +12,10 @@ class PlaceDetailModel extends PlaceInfoModel {
       usedCost,
       dogBreed,
       parkingFlag,
-      policyCautions,
-      imageList;
+      policyCautions;
+
+  // @JsonKey(fromJson: imageListToString)
+  final List<dynamic> imageList;
 
   // final List<PlaceIamgeModel> thumbs;
 
@@ -34,34 +39,12 @@ class PlaceDetailModel extends PlaceInfoModel {
     required this.imageList,
     required this.policyCautions,
   });
-  factory PlaceDetailModel.fromJson({
-    required Map<String, dynamic> json,
-  }) {
-    return PlaceDetailModel(
-        contentSeq: json['contentSeq'],
-        areaName: json['areaName'],
-        partName: json['partName'],
-        title: json['title'],
-        address: json['address'],
-        latitude: json['latitude'],
-        longitude: json['longitude'],
-        tel: json['tel'],
-        keyword: json['keyword'],
-        usedTime: json['usedTime'],
-        homePage: json['homePage'],
-        content: json['content'],
-        mainFacility: json['mainFacility'],
-        usedCost: json['usedCost'],
-        dogBreed: json['dogBreed'],
-        parkingFlag: json['parkingFlag'],
-        policyCautions: json['policyCautions'],
-        imageList: json['imageList'][0]['image']
-        // thumbs: json['thumbs'].map<PlaceIamgeModel>(
-        //   (x) => PlaceIamgeModel(
-        //     image: x['image'],
-        //   ),
-        // ),
-        );
+
+  factory PlaceDetailModel.fromJson(Map<String, dynamic> json) =>
+      _$PlaceDetailModelFromJson(json);
+
+  static imageListToString(List value) {
+    return value[0]['image'];
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:_dangtrip/Common/Components/place_detail_card.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
 import 'package:_dangtrip/model/place_detail_model.dart';
+import 'package:_dangtrip/widgets/place_image_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -50,18 +51,22 @@ class PlaceDetailScreen extends StatelessWidget {
           );
         }
         final item = PlaceDetailModel.fromJson(
-          json: snapshot.data!,
+          snapshot.data!,
         );
+        // print(item.imageList);
         return CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
               child: PlaceDetailCard(
-                image: Image.network(
-                  item.imageList,
-                  width: MediaQuery.of(context).size.width,
-                  height: 350,
-                  fit: BoxFit.cover,
+                image: PlaceImageSlider(
+                  imageList: item.imageList,
                 ),
+                // Image.network(
+                //   item.imageList.toString(),
+                //   width: MediaQuery.of(context).size.width,
+                //   height: 350,
+                //   fit: BoxFit.cover,
+                // ),
                 title: item.title,
                 areaName: item.areaName,
                 partName: item.partName,

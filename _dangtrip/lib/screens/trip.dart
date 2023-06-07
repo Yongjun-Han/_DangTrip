@@ -27,12 +27,15 @@ class Trip extends ConsumerWidget {
         .get(
             'https://www.pettravel.kr/api/listPart.do?page=1&pageBlock=10&partCode=$pcCode')
         .then((value) {
-      data.add(value.data!);
+      data.add(value.data!); // 이미지 데이터가 없는 식음료 api 데이터 리스트
       for (int i = 0; i < value.data![0]['resultList'].length; i++) {
-        seqArr.add(value.data![0]['resultList'][i]['contentSeq']);
+        seqArr.add(value.data![0]['resultList'][i]
+            ['contentSeq']); //이미지 url 요청에 필요한 쿼리값 contentSeq 추출
       }
-      return seqArr; //컨텐츠 시퀀스 번호 배열
+      return seqArr; //contentSeq리스트
     }).then((value) async {
+      //value = seqArr
+
       for (int i = 0; i < value.length; i++) {
         final res2 = await dio
             .get(
@@ -43,10 +46,10 @@ class Trip extends ConsumerWidget {
           // print(thumbArr);
           data.add(thumbArr);
         });
-        print(res2);
       }
     });
     // print(data[1]);
+    // print(data);
     return data;
   }
 
@@ -144,70 +147,6 @@ class Trip extends ConsumerWidget {
                       )
                       .toList(),
                 ),
-                // ListView.separated(
-                //     scrollDirection: Axis.horizontal,
-                //     itemBuilder: (BuildContext context, int index) {
-                //       return GestureDetector(
-                //         onTap: () {
-                //           ref.read(categoryProvider.notifier).update(
-                //             (state) {
-                //               late String placecategory;
-                //               if (category[index] == '식음료') {
-                //                 placecategory = 'PC01';
-                //                 ref
-                //                     .read(selectedCategoryProvider.notifier)
-                //                     .update((state) => !state);
-                //               } else if (category[index] == '숙박') {
-                //                 placecategory = 'PC02';
-                //               } else if (category[index] == '관광지') {
-                //                 placecategory = 'PC03';
-                //               } else if (category[index] == '체험') {
-                //                 placecategory = 'PC04';
-                //               } else if (category[index] == '동물병원') {
-                //                 placecategory = 'PC05';
-                //               }
-                //               return placecategory;
-                //             },
-                //           );
-                //         },
-                //         child: Container(
-                //           height: 40,
-                //           decoration: BoxDecoration(
-                //             color: const Color.fromARGB(255, 214, 214, 214),
-                //             //  const Color.fromARGB(255, 214, 214, 214),
-                //             borderRadius: BorderRadius.circular(10),
-                //           ),
-                //           child: Padding(
-                //             padding: const EdgeInsets.all(12.0),
-                //             child: Row(
-                //               children: [
-                //                 Icon(
-                //                   categoryIcon[index],
-                //                   size: 16,
-                //                   color: const Color(0xffafafaf),
-                //                 ),
-                //                 const SizedBox(
-                //                   width: 4,
-                //                 ),
-                //                 Text(
-                //                   category[index],
-                //                   style: const TextStyle(
-                //                       color: Color(0xffafafaf),
-                //                       fontSize: 14,
-                //                       fontWeight: FontWeight.w500),
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //       );
-                //     },
-                //     separatorBuilder: (BuildContext context, int index) {
-                //       return const SizedBox(
-                //         width: 12,
-                //       );
-                //     },
-                //     itemCount: selectState.toList().length),
               ),
               const SizedBox(
                 height: 16,
