@@ -43,12 +43,12 @@ class PlaceDetailModel extends PlaceInfoModel {
   factory PlaceDetailModel.fromJson(Map<String, dynamic> json) =>
       _$PlaceDetailModelFromJson(json);
 
-  static imageListToString(List value) {
-    return value[0]['image'];
-  }
+  // static imageListToString(List value) {
+  //   return value[0]['image'];
+  // }
 }
 
-class PlaceIamgeModel {
-  final String image;
-  PlaceIamgeModel({required this.image});
-}
+// class PlaceIamgeModel {
+//   final String image;
+//   PlaceIamgeModel({required this.image});
+// }

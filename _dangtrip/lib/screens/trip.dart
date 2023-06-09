@@ -14,10 +14,10 @@ class Trip extends ConsumerWidget {
     super.key,
   });
 
-  Future<List> paginateData(String pcCode) async {
+  Future<Map<String, dynamic>> paginateData(String pcCode, int page) async {
     final dio = Dio();
-    //장소 데이터
-    final List data = [];
+
+    late Map<String, dynamic> placeData;
     //장소의 시퀀스 넘버 데이터
     final List seqArr = [];
     //장소의 썸네일 데이터
@@ -25,13 +25,15 @@ class Trip extends ConsumerWidget {
 
     final res = await dio
         .get(
-            'https://www.pettravel.kr/api/listPart.do?page=1&pageBlock=10&partCode=$pcCode')
+            'https://www.pettravel.kr/api/listPart.do?page=$page&pageBlock=20&partCode=$pcCode')
         .then((value) {
-      data.add(value.data!); // 이미지 데이터가 없는 식음료 api 데이터 리스트
-      for (int i = 0; i < value.data![0]['resultList'].length; i++) {
-        seqArr.add(value.data![0]['resultList'][i]
-            ['contentSeq']); //이미지 url 요청에 필요한 쿼리값 contentSeq 추출
-      }
+      placeData = value.data[0]; // 응답받은 json 데이터
+      for (int i = 0; i < placeData['resultList'].length; i++) {
+        seqArr.add(
+          placeData['resultList'][i]['contentSeq'],
+        );
+      } //이미지 url 요청에 필요한 쿼리값 contentSeq 추출
+      // print(seqArr);
       return seqArr; //contentSeq리스트
     }).then((value) async {
       //value = seqArr
@@ -44,7 +46,7 @@ class Trip extends ConsumerWidget {
               .then((value) {
             thumbArr.add(
                 "https://plus.unsplash.com/premium_photo-1661954422066-36639b6f13b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2338&q=80");
-            data.add(thumbArr);
+            placeData['thumbUrl'] = thumbArr;
           });
         }
       } else {
@@ -53,21 +55,20 @@ class Trip extends ConsumerWidget {
               .get(
                   'http://www.pettravel.kr/api/detailSeqPart.do?partCode=$pcCode&contentNum=${value[i]}')
               .then((value) {
-            // print(value.data[0]['resultList']['imageList'][0]['image']);
-            thumbArr.add(value.data[0]['resultList']['imageList'][0]['image']);
-            data.add(thumbArr); // 썸네일 데이터 추가
+            thumbArr.add(
+                value.data[0]['resultList']['imageList'][0]['image']); //이미지 링크
+            placeData['thumbUrl'] = thumbArr;
           });
         }
       }
     });
-    // print(data[1]);
-    // print(data);
-    return data;
+    return placeData;
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(categoryProvider);
+    final pageState = ref.watch(contentPageProvider);
     final List<CategoryModel> selectState = ref.watch(selectProvider);
 
     return Center(
@@ -213,9 +214,10 @@ class Trip extends ConsumerWidget {
               const SizedBox(
                 height: 24,
               ),
-              FutureBuilder<List>(
-                future: paginateData(state),
-                builder: (context, AsyncSnapshot<List> snapshot) {
+              FutureBuilder<Map<String, dynamic>>(
+                future: paginateData(state, pageState),
+                builder:
+                    (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -224,11 +226,11 @@ class Trip extends ConsumerWidget {
 
                   return Expanded(
                     child: ListView.separated(
-                      itemCount: snapshot.data![0][0]['resultList'].length,
+                      itemCount: snapshot.data!['resultList'].length,
                       itemBuilder: (_, index) {
-                        final item = snapshot.data![0][0]['resultList'][index];
+                        final item = snapshot.data!['resultList'][index];
                         // print(snapshot.data![1]);
-                        final thumbItem = snapshot.data![1];
+                        final thumbItem = snapshot.data!['thumbUrl'];
                         final parsedItem = PlaceInfoModel.fromJson(item);
                         //장소 카드 리스트의 카드
                         return GestureDetector(

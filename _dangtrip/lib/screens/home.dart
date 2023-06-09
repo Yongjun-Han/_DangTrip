@@ -79,16 +79,16 @@ class _HomeScreenState extends State<HomeScreen>
           //좌우 스크롤 고정
           physics: const NeverScrollableScrollPhysics(),
           controller: controller,
-          children: const [
-            Column(
+          children: [
+            const Column(
               children: [
                 HomeBanner(),
               ],
             ),
-            NaverMapTest(),
+            const NaverMapTest(),
             Trip(),
-            Photo(),
-            RestaurantScreen(),
+            const Photo(),
+            const RestaurantScreen(),
           ],
         ));
   }

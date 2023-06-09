@@ -6,3 +6,5 @@ final categoryProvider = StateProvider<String>((ref) => "PC01");
 // final sliderIndex = StateProvider<int>((ref) => 0);
 
 final selectedCategoryProvider = StateProvider<bool>((ref) => false);
+
+final contentPageProvider = StateProvider<int>((ref) => 1);
