@@ -5,7 +5,6 @@ import 'package:_dangtrip/Common/Utils/select_notifier_provider.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/model/place_model.dart';
 import 'package:_dangtrip/screens/place_detail_screen.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,8 +13,10 @@ class Trip extends ConsumerWidget {
     super.key,
   });
 
-  Future<Map<String, dynamic>> paginateData(String pcCode, int page) async {
-    final dio = Dio();
+  Future<Map<String, dynamic>> paginateData(
+      String pcCode, int page, WidgetRef ref) async {
+    // final dio = Dio();
+    final dio = ref.watch(dioRequestProvider);
 
     late Map<String, dynamic> placeData;
     //장소의 시퀀스 넘버 데이터
@@ -215,7 +216,7 @@ class Trip extends ConsumerWidget {
                 height: 24,
               ),
               FutureBuilder<Map<String, dynamic>>(
-                future: paginateData(state, pageState),
+                future: paginateData(state, pageState, ref),
                 builder:
                     (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
                   if (!snapshot.hasData) {

@@ -1,10 +1,17 @@
-import 'package:_dangtrip/model/place_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'place_detail_model.g.dart';
 
 @JsonSerializable()
-class PlaceDetailModel extends PlaceInfoModel {
-  final String keyword,
+class PlaceDetailModel {
+  final int contentSeq;
+  final String areaName,
+      partName,
+      title,
+      keyword,
+      address,
+      latitude,
+      longitude,
+      tel,
       usedTime,
       homePage,
       content,
@@ -12,22 +19,32 @@ class PlaceDetailModel extends PlaceInfoModel {
       usedCost,
       dogBreed,
       parkingFlag,
-      policyCautions;
+      policyCautions,
+      provisionSupply,
+      petFacility,
+      restaurant,
+      parkingLog,
+      emergencyResponse,
+      memo,
+      bathFlag,
+      provisionFlag,
+      petFlag,
+      petWeight,
+      emergencyFlag,
+      entranceFlag,
+      inOutFlag;
 
-  // @JsonKey(fromJson: imageListToString)
-  final List<dynamic> imageList;
-
-  // final List<PlaceIamgeModel> thumbs;
+  final List<Map<String, String>> imageList;
 
   PlaceDetailModel({
-    required super.contentSeq,
-    required super.areaName,
-    required super.partName,
-    required super.title,
-    required super.address,
-    required super.latitude,
-    required super.longitude,
-    required super.tel,
+    required this.contentSeq,
+    required this.areaName,
+    required this.partName,
+    required this.title,
+    required this.address,
+    required this.latitude,
+    required this.longitude,
+    required this.tel,
     required this.keyword,
     required this.usedTime,
     required this.homePage,
@@ -38,17 +55,21 @@ class PlaceDetailModel extends PlaceInfoModel {
     required this.parkingFlag,
     required this.imageList,
     required this.policyCautions,
+    required this.provisionSupply,
+    required this.petFacility,
+    required this.restaurant,
+    required this.parkingLog,
+    required this.emergencyResponse,
+    required this.memo,
+    required this.bathFlag,
+    required this.provisionFlag,
+    required this.petFlag,
+    required this.petWeight,
+    required this.emergencyFlag,
+    required this.entranceFlag,
+    required this.inOutFlag,
   });
 
   factory PlaceDetailModel.fromJson(Map<String, dynamic> json) =>
-      _$PlaceDetailModelFromJson(json);
-
-  // static imageListToString(List value) {
-  //   return value[0]['image'];
-  // }
+      _$PlaceDetailModelFromJson(json[0]['resultList']);
 }
-
-// class PlaceIamgeModel {
-//   final String image;
-//   PlaceIamgeModel({required this.image});
-// }
