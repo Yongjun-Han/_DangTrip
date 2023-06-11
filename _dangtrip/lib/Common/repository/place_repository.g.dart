@@ -19,35 +19,6 @@ class _PlaceRepository implements PlaceRepository {
   String? baseUrl;
 
   @override
-  Future<PlaceCursorPagination<PlaceInfoModel>> paginate({
-    required page,
-    required pcCode,
-  }) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<PlaceCursorPagination<PlaceInfoModel>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/listPart.do?page=${page}&pageBlock=10&partCode=${pcCode}',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = PlaceCursorPagination<PlaceInfoModel>.fromJson(
-      _result.data!,
-      (json) => PlaceInfoModel.fromJson(json as Map<String, dynamic>),
-    );
-    return value;
-  }
-
-  @override
   Future<PlaceDetailModel> getPlaceDetail({
     required category,
     required contentSeq,
