@@ -19,7 +19,7 @@ class _PlaceRepository implements PlaceRepository {
   String? baseUrl;
 
   @override
-  Future<PlaceDetailModel> getPlaceDetail({
+  Future<List<DetailPageModel>> getPlaceDetail({
     required category,
     required contentSeq,
   }) async {
@@ -28,7 +28,7 @@ class _PlaceRepository implements PlaceRepository {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<PlaceDetailModel>(Options(
+        .fetch<List<dynamic>>(_setStreamType<List<DetailPageModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -40,7 +40,9 @@ class _PlaceRepository implements PlaceRepository {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = PlaceDetailModel.fromJson(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) => DetailPageModel.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 

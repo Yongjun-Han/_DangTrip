@@ -1,3 +1,4 @@
+import 'package:_dangtrip/model/detail_page_model.dart';
 import 'package:_dangtrip/model/place_detail_model.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
@@ -17,7 +18,7 @@ abstract class PlaceRepository {
 
   //'http://www.pettravel.kr/api/detailSeqPart.do?partCode=$category&contentNum=$contentSeq'
   @GET('/detailSeqPart.do?partCode={category}&contentNum={contentSeq}')
-  Future<PlaceDetailModel> getPlaceDetail({
+  Future<List<DetailPageModel>> getPlaceDetail({
     @Path() required String category,
     @Path() required int contentSeq,
   });

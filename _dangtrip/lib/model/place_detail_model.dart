@@ -71,5 +71,5 @@ class PlaceDetailModel {
   });
 
   factory PlaceDetailModel.fromJson(Map<String, dynamic> json) =>
-      _$PlaceDetailModelFromJson(json[0]['resultList']);
+      _$PlaceDetailModelFromJson(json);
 }
