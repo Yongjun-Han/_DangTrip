@@ -14,6 +14,10 @@ class PlaceDetailScreen extends ConsumerWidget {
   // Future<Map<String, dynamic>> getDetail() async {
   Future<List<DetailPageModel>> getDetail(WidgetRef ref, int contentSeq) async {
     final dio = ref.watch(dioRequestProvider);
+    // final dio = Dio();
+    // dio.interceptors.add(
+    //   CustomInterceptor(storage: storage),
+    // );
     final category = ref.watch(categoryProvider);
     final repository =
         PlaceRepository(dio, baseUrl: 'http://www.pettravel.kr/api/');

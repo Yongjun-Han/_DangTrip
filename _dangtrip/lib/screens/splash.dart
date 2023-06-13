@@ -1,3 +1,5 @@
+import 'package:_dangtrip/Common/Dio/dio.dart';
+import 'package:_dangtrip/Common/Utils/place_provider.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/const/data.dart';
 import 'package:_dangtrip/Common/secure/secure_storage.dart';
@@ -34,7 +36,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
 
-    final dio = Dio();
+    final dio = ref.watch(dioRequestProvider);
+    dio.interceptors.add(CustomInterceptor(storage: storage));
 
     try {
       final res = await dio.post(

@@ -15,3 +15,6 @@ class DetailPageModel {
   factory DetailPageModel.fromJson(Map<String, dynamic> json) =>
       _$DetailPageModelFromJson(json);
 }
+
+//retrofit 용 모델 
+//api 응답 결과와 정확하게 맞추기 위해 

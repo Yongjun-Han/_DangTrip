@@ -25,22 +25,4 @@ class PlaceInfoModel {
       _$PlaceInfoModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlaceInfoModelToJson(this);
-
-  // static jsonKeyTest(int value) {
-  //   return value * 1;
-  // }
-  // factory PlaceInfoModel.fromJson({
-  //   required Map<String, dynamic> json,
-  // }) {
-  //   return PlaceInfoModel(
-  //     contentSeq: json['contentSeq'],
-  //     areaName: json['areaName'],
-  //     partName: json['partName'],
-  //     title: json['title'],
-  //     address: json['address'],
-  //     latitude: json['latitude'],
-  //     longitude: json['longitude'],
-  //     tel: json['tel'],
-  //   );
-  // }
 }

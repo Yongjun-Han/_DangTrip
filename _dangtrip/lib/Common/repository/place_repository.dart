@@ -1,6 +1,6 @@
 import 'package:_dangtrip/model/detail_page_model.dart';
-import 'package:_dangtrip/model/place_detail_model.dart';
-import 'package:dio/dio.dart';
+import 'package:_dangtrip/model/place_cursor_pagination_model.dart';
+import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
 part 'place_repository.g.dart';
 
@@ -9,12 +9,18 @@ part 'place_repository.g.dart';
 abstract class PlaceRepository {
   factory PlaceRepository(Dio dio, {String baseUrl}) = _PlaceRepository;
 
-  // //https://www.pettravel.kr/api/listPart.do?page=1&pageBlock=10&partCode=$pcCode'
-  // @GET('/listPart.do?page={page}&pageBlock=10&partCode={pcCode}')
-  // Future<PlaceCursorPagination<PlaceInfoModel>> paginate({
-  //   @Path('page') required int page,
-  //   @Path('pcCode') required String pcCode,
-  // });
+  // @GET('/')
+  // @Headers({
+  //   'accessToken': 'true',
+  // })
+  // void checkAuth();
+
+  //https://www.pettravel.kr/api/listPart.do?page=1&pageBlock=10&partCode=$pcCode'
+  @GET('/listPart.do?page={page}&pageBlock=20&partCode={pcCode}')
+  Future<List<PlaceCursorPagination>> paginate({
+    @Path('page') required int page,
+    @Path('pcCode') required String pcCode,
+  });
 
   //'http://www.pettravel.kr/api/detailSeqPart.do?partCode=$category&contentNum=$contentSeq'
   @GET('/detailSeqPart.do?partCode={category}&contentNum={contentSeq}')

@@ -3,7 +3,7 @@ import 'package:_dangtrip/Common/Utils/cateModel.dart';
 import 'package:_dangtrip/Common/Utils/place_provider.dart';
 import 'package:_dangtrip/Common/Utils/select_notifier_provider.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
-import 'package:_dangtrip/model/place_model.dart';
+import 'package:_dangtrip/Common/repository/place_repository.dart';
 import 'package:_dangtrip/screens/place_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,40 +15,36 @@ class Trip extends ConsumerWidget {
 
   Future<Map<String, dynamic>> paginateData(
       String pcCode, int page, WidgetRef ref) async {
-    // final dio = Dio();
     final dio = ref.watch(dioRequestProvider);
+    // final storage = ref.watch(secureStorageProvider);
+    // dio.interceptors.add(CustomInterceptor(storage: storage));
 
-    late Map<String, dynamic> placeData;
+    //반환할 데이터 장소정보 + 썸네일 이미지 리스트
+    late Map<String, dynamic> placedata = {};
     //장소의 시퀀스 넘버 데이터
-    final List seqArr = [];
+    final List seqarr = [];
     //장소의 썸네일 데이터
     final List thumbArr = [];
 
-    final res = await dio
-        .get(
-            'https://www.pettravel.kr/api/listPart.do?page=$page&pageBlock=20&partCode=$pcCode')
-        .then((value) {
-      placeData = value.data[0]; // 응답받은 json 데이터
-      for (int i = 0; i < placeData['resultList'].length; i++) {
-        seqArr.add(
-          placeData['resultList'][i]['contentSeq'],
-        );
-      } //이미지 url 요청에 필요한 쿼리값 contentSeq 추출
-      // print(seqArr);
-      return seqArr; //contentSeq리스트
+    final res =
+        await PlaceRepository(dio, baseUrl: 'https://www.pettravel.kr/api')
+            .paginate(page: page, pcCode: pcCode)
+            .then((value) {
+      placedata['data'] = value[0].resultList;
+      // print(placedata['data']);
+      for (int i = 0; i < value[0].resultList.length; i++) {
+        // print(value[0].resultList[i]);
+        seqarr.add(value[0].resultList[i].contentSeq);
+      }
+      // print(seqarr);
+      return seqarr;
     }).then((value) async {
-      //value = seqArr
-      //동물병원데이터는 api 에서 썸내일 이미지를 제공 x --> 예시미이지로 대체
+      // print(value);
       if (pcCode == 'PC05') {
         for (int i = 0; i < value.length; i++) {
-          await dio
-              .get(
-                  'http://www.pettravel.kr/api/detailSeqPart.do?partCode=$pcCode&contentNum=${value[i]}')
-              .then((value) {
-            thumbArr.add(
-                "https://plus.unsplash.com/premium_photo-1661954422066-36639b6f13b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2338&q=80");
-            placeData['thumbUrl'] = thumbArr;
-          });
+          thumbArr.add(
+              "https://plus.unsplash.com/premium_photo-1661954422066-36639b6f13b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2338&q=80");
+          placedata['thumbUrl'] = thumbArr;
         }
       } else {
         for (int i = 0; i < value.length; i++) {
@@ -56,14 +52,16 @@ class Trip extends ConsumerWidget {
               .get(
                   'http://www.pettravel.kr/api/detailSeqPart.do?partCode=$pcCode&contentNum=${value[i]}')
               .then((value) {
+            // print(value.data[0]['resultList']['imageList'][0]['image']);
             thumbArr.add(
                 value.data[0]['resultList']['imageList'][0]['image']); //이미지 링크
-            placeData['thumbUrl'] = thumbArr;
+            placedata['thumbUrl'] = thumbArr;
           });
         }
       }
     });
-    return placeData;
+    // print(placedata['data']);
+    return placedata;
   }
 
   @override
@@ -227,34 +225,32 @@ class Trip extends ConsumerWidget {
 
                   return Expanded(
                     child: ListView.separated(
-                      itemCount: snapshot.data!['resultList'].length,
+                      itemCount: snapshot.data!['data'].length,
                       itemBuilder: (_, index) {
-                        final item = snapshot.data!['resultList'][index];
-                        // print(snapshot.data![1]);
+                        final item = snapshot.data!['data'][index];
                         final thumbItem = snapshot.data!['thumbUrl'];
-                        final parsedItem = PlaceInfoModel.fromJson(item);
                         //장소 카드 리스트의 카드
                         return GestureDetector(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
                                 builder: (_) => PlaceDetailScreen(
-                                      contentSeq: parsedItem.contentSeq,
-                                      partName: parsedItem.partName,
-                                    )));
+                                  contentSeq: item.contentSeq,
+                                  partName: item.partName,
+                                ),
+                              ),
+                            );
                           },
-
-                          // (ref.read(categoryProvider) == "PC05")
                           child: PlaceInfoCard(
-                            contentSeq: parsedItem.contentSeq,
+                            contentSeq: item.contentSeq,
                             image: Image.network(
                               thumbItem[index],
-                              // thumbImage() as String,
                               fit: BoxFit.cover,
                               height: 250,
                               width: MediaQuery.of(context).size.width,
                             ),
-                            name: parsedItem.title,
-                            area: parsedItem.areaName,
+                            name: item.title,
+                            area: item.areaName,
                             ratings: 4.7,
                           ),
                         );

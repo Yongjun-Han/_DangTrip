@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'place_detail_model.g.dart';
 
+//실제로 활용할 api 데이터의 모델
 @JsonSerializable()
 class PlaceDetailModel {
   final int contentSeq;
