@@ -16,11 +16,9 @@ class Trip extends ConsumerWidget {
   Future<Map<String, dynamic>> paginateData(
       String pcCode, int page, WidgetRef ref) async {
     final dio = ref.watch(dioRequestProvider);
-    // final storage = ref.watch(secureStorageProvider);
-    // dio.interceptors.add(CustomInterceptor(storage: storage));
 
     //반환할 데이터 장소정보 + 썸네일 이미지 리스트
-    late Map<String, dynamic> placedata = {};
+    final Map<String, dynamic> placedata = {};
     //장소의 시퀀스 넘버 데이터
     final List seqarr = [];
     //장소의 썸네일 데이터

@@ -1,8 +1,19 @@
+import 'package:_dangtrip/Common/Utils/place_provider.dart';
 import 'package:_dangtrip/model/detail_page_model.dart';
 import 'package:_dangtrip/model/place_cursor_pagination_model.dart';
 import 'package:dio/dio.dart' hide Headers;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
 part 'place_repository.g.dart';
+
+final placeRepositoryProvider = Provider(
+  (ref) {
+    final dio = ref.watch(dioRequestProvider);
+    final repository =
+        PlaceRepository(dio, baseUrl: 'http://www.pettravel.kr/api/');
+    return repository;
+  },
+);
 
 //retrofit 의 작성법 이다 외우면된다
 @RestApi()

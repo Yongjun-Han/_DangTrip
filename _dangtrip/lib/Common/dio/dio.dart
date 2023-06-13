@@ -13,7 +13,7 @@ class CustomInterceptor extends Interceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    // print("[REQ] [${options.method}] ${options.uri}");
+    print("[REQ] [${options.method}] ${options.uri}");
 
     if (options.headers['accessToken'] == 'true') {
       //true 값 삭제후 실 토큰 대치

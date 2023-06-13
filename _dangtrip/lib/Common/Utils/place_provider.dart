@@ -1,3 +1,5 @@
+import 'package:_dangtrip/Common/Dio/dio.dart';
+import 'package:_dangtrip/Common/secure/secure_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,7 +15,12 @@ final selectedCategoryProvider = StateProvider<bool>((ref) => false);
 final contentPageProvider = StateProvider<int>((ref) => 1);
 
 //dio provider
-final dioRequestProvider = Provider((ref) {
+final dioRequestProvider = Provider<Dio>((ref) {
   final dio = Dio();
+  final storage = ref.watch(secureStorageProvider);
+
+  dio.interceptors.add(
+    CustomInterceptor(storage: storage),
+  );
   return dio;
 });

@@ -13,36 +13,11 @@ class PlaceDetailScreen extends ConsumerWidget {
 
   // Future<Map<String, dynamic>> getDetail() async {
   Future<List<DetailPageModel>> getDetail(WidgetRef ref, int contentSeq) async {
-    final dio = ref.watch(dioRequestProvider);
-    // final dio = Dio();
-    // dio.interceptors.add(
-    //   CustomInterceptor(storage: storage),
-    // );
     final category = ref.watch(categoryProvider);
-    final repository =
-        PlaceRepository(dio, baseUrl: 'http://www.pettravel.kr/api/');
-
-    return repository.getPlaceDetail(
-      category: category,
-      contentSeq: contentSeq,
-    );
+    return ref
+        .watch(placeRepositoryProvider)
+        .getPlaceDetail(category: category, contentSeq: contentSeq);
   }
-  // if (partName == '식음료') {
-  //   category = 'PC01';
-  // } else if (partName == '숙박') {
-  //   category = 'PC02';
-  // } else if (partName == '관광지') {
-  //   category = 'PC03';
-  // } else if (partName == '체험') {
-  //   category = 'PC04';
-  // } else if (partName == '동물병원') {
-  //   category = 'PC05';
-  // }
-
-  // final res = await dio.get(
-  //     'http://www.pettravel.kr/api/detailSeqPart.do?partCode=$category&contentNum=$contentSeq');
-  // // print(res.data[0]['resultList']);
-  // return res.data[0]['resultList'];
 
   const PlaceDetailScreen({
     required this.contentSeq,
