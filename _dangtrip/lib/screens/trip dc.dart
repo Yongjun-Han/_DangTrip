@@ -1,6 +1,7 @@
 import 'package:_dangtrip/Common/Components/place_info_card.dart';
 import 'package:_dangtrip/Common/Utils/cateModel.dart';
 import 'package:_dangtrip/Common/Utils/place_provider.dart';
+import 'package:_dangtrip/Common/Utils/place_statenotifier_provider.dart';
 import 'package:_dangtrip/Common/Utils/select_notifier_provider.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/repository/place_repository.dart';
@@ -14,12 +15,10 @@ class Trip extends ConsumerWidget {
     super.key,
   });
 
-  Future<Map<String, dynamic>> paginateData(String pcCode, int page) async {
+  Future<List> paginateData(String pcCode, int page) async {
     // final dio = ref.watch(dioRequestProvider);
     final dio = Dio();
-
     //반환할 데이터 장소정보 + 썸네일 이미지 리스트
-    // final placedata = ref.watch(placeDataProvider);
     final Map<String, dynamic> placedata = {};
     //장소의 시퀀스 넘버 데이터
     final List seqarr = [];
@@ -58,23 +57,25 @@ class Trip extends ConsumerWidget {
           });
         }
       }
-    });
+      return thumbArr;
+    }).then((value) => value);
     // print(placedata['data']);
     // ref.read(placeDataProvider.notifier).update((state) => placedata);
-    return placedata;
+    return thumbArr;
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final data = ref.watch(placeprovider);
-    // if (data.isEmpty) {
-    //   return const Center(
-    //     child: CircularProgressIndicator(),
-    //   );
-    // }
+    final data = ref.watch(placeprovider);
+    if (data.isEmpty) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
 
-    final categoryState = ref.watch(categoryProvider);
-    final pageState = ref.watch(contentPageProvider);
+    // final categoryState = ref.watch(categoryProvider);
+    // final pageState = ref.watch(contentPageProvider);
+
     final List<CategoryModel> selectState = ref.watch(selectProvider);
 
     return Center(
@@ -220,58 +221,49 @@ class Trip extends ConsumerWidget {
               const SizedBox(
                 height: 24,
               ),
-              FutureBuilder<Map<String, dynamic>>(
-                future: paginateData(categoryState, pageState),
-                builder:
-                    (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-
-                  return Expanded(
-                    child: ListView.separated(
-                      itemCount: snapshot.data!['data'].length,
-                      itemBuilder: (_, index) {
-                        final item = snapshot.data!['data'][index];
-                        final thumbItem = snapshot.data!['thumbUrl'];
-                        //장소 카드 리스트의 카드
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => PlaceDetailScreen(
-                                  contentSeq: item.contentSeq,
-                                  partName: item.partName,
-                                ),
-                              ),
-                            );
-                          },
-                          child: PlaceInfoCard(
-                            contentSeq: item.contentSeq,
-                            image: Image.network(
-                              thumbItem[index],
-                              fit: BoxFit.cover,
-                              height: 250,
-                              width: MediaQuery.of(context).size.width,
+              Expanded(
+                child: ListView.separated(
+                  itemCount: data[0].resultList.length,
+                  itemBuilder: (_, index) {
+                    final item = data[0].resultList[index];
+                    // final thumbItem = paginateThumb(categoryState, ref);
+                    // print("TT $thumbItem");
+                    //장소 카드 리스트의 카드
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => PlaceDetailScreen(
+                              contentSeq: item.contentSeq,
+                              partName: item.partName,
                             ),
-                            name: item.title,
-                            area: item.areaName,
-                            ratings: 4.7,
                           ),
                         );
-                        // model: parsedItem,
                       },
-                      separatorBuilder: (_, index) {
-                        return const SizedBox(
-                          height: 8,
-                        );
-                      },
-                    ),
-                  );
-                },
-              )
+                      child: PlaceInfoCard(
+                        contentSeq: item.contentSeq,
+                        image: Image.network(
+                          // thumbArr.toString(),
+                          // thumbItem[index].toString(),
+                          "https://plus.unsplash.com/premium_photo-1661954422066-36639b6f13b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2338&q=80",
+                          fit: BoxFit.cover,
+                          height: 250,
+                          width: MediaQuery.of(context).size.width,
+                        ),
+                        name: item.title,
+                        area: item.areaName,
+                        ratings: 4.7,
+                      ),
+                    );
+                    // model: parsedItem,
+                  },
+                  separatorBuilder: (_, index) {
+                    return const SizedBox(
+                      height: 8,
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),

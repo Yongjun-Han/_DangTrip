@@ -14,6 +14,8 @@ final selectedCategoryProvider = StateProvider<bool>((ref) => false);
 //pagination을 위한 쿼리 파라미터
 final contentPageProvider = StateProvider<int>((ref) => 1);
 
+final placeDataProvider = StateProvider<List>((ref) => []);
+
 //dio provider
 final dioRequestProvider = Provider<Dio>((ref) {
   final dio = Dio();
