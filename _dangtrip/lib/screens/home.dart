@@ -5,6 +5,7 @@ import 'package:_dangtrip/screens/maps.dart';
 import 'package:_dangtrip/screens/photo.dart';
 import 'package:_dangtrip/screens/trip.dart';
 import 'package:_dangtrip/widgets/banner_slide.dart';
+import 'package:_dangtrip/widgets/hotplace.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -80,13 +81,41 @@ class _HomeScreenState extends State<HomeScreen>
           physics: const NeverScrollableScrollPhysics(),
           controller: controller,
           children: [
-            const Column(
+            Column(
               children: [
-                HomeBanner(),
+                const HomeBanner(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 16),
+                      child: Text(
+                        "지금 인기 플레이스",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 300,
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 16),
+                          child: HotPlace(),
+                        )),
+                  ],
+                )
               ],
             ),
             const NaverMapTest(),
-            Trip(),
+            const Trip(),
             const Photo(),
             const RestaurantScreen(),
           ],

@@ -27,23 +27,6 @@ class PlaceInfoCard extends StatelessWidget {
     super.key,
   });
 
-  // factory PlaceInfoCard.fromModel({
-  //   required PlaceInfoModel model,
-  //   bool isDetail = false,
-  // }) {
-  //   return PlaceInfoCard(
-  //     image: Image.asset(
-  //       'lib/assets/banner/detail_test.png',
-  //       fit: BoxFit.cover,
-  //       height: 250,
-  //       width: MediaQuery.of(context).size.width,
-  //     ),
-  //     name: model.title,
-  //     area: model.areaName,
-  //     ratings: 4.7,
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Column(

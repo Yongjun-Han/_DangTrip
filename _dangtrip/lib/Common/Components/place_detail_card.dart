@@ -82,6 +82,7 @@ class PlaceDetailCard extends StatelessWidget {
                       Icons.keyboard_arrow_left_rounded,
                       size: 32,
                       color: Colors.white,
+                      shadows: [Shadow(color: Colors.black26, blurRadius: 5)],
                     ),
                   ),
                 ),
@@ -264,12 +265,17 @@ class PlaceDetailCard extends StatelessWidget {
                                   ),
                                 ),
                               if (usedTime != '')
-                                Text(
-                                  usedTime,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color.fromARGB(255, 92, 92, 92),
+                                SizedBox(
+                                  width: 280,
+                                  child: Text(
+                                    usedTime,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromARGB(255, 92, 92, 92),
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
                                   ),
                                 )
                             ],
@@ -476,9 +482,9 @@ class PlaceDetailCard extends StatelessWidget {
                   const SizedBox(
                     height: 32,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
+                    children: [
                       Icon(
                         Icons.report_problem_outlined,
                         size: 16,

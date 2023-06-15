@@ -57,8 +57,7 @@ class Trip extends ConsumerWidget {
           });
         }
       }
-      return thumbArr;
-    }).then((value) => value);
+    });
     // print(placedata['data']);
     // ref.read(placeDataProvider.notifier).update((state) => placedata);
     return thumbArr;
@@ -73,8 +72,8 @@ class Trip extends ConsumerWidget {
       );
     }
 
-    // final categoryState = ref.watch(categoryProvider);
-    // final pageState = ref.watch(contentPageProvider);
+    final categoryState = ref.watch(categoryProvider);
+    final pageState = ref.watch(contentPageProvider);
 
     final List<CategoryModel> selectState = ref.watch(selectProvider);
 
@@ -226,9 +225,11 @@ class Trip extends ConsumerWidget {
                   itemCount: data[0].resultList.length,
                   itemBuilder: (_, index) {
                     final item = data[0].resultList[index];
+                    final thumbItem = paginateData(categoryState, pageState);
+                    // print(thumbItem.then((value) => value[0]['resultList']));
                     // final thumbItem = paginateThumb(categoryState, ref);
-                    // print("TT $thumbItem");
-                    //장소 카드 리스트의 카드
+                    // print("TT $thumbItem");/
+                    // 장소 카드 리스트의 카드
                     return GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(
