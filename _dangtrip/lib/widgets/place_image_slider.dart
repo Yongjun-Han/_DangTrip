@@ -39,7 +39,7 @@ class _PlaceImageSliderState extends State<PlaceImageSlider> {
                 .toList(),
             options: CarouselOptions(
               initialPage: 0,
-              height: 350,
+              height: 360,
               viewportFraction: 1,
               scrollPhysics: const BouncingScrollPhysics(),
               autoPlay: true,

@@ -1,5 +1,6 @@
 import 'package:_dangtrip/Common/Components/place_detail_card.dart';
 import 'package:_dangtrip/Common/Utils/place_provider.dart';
+import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/repository/place_repository.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
 import 'package:_dangtrip/model/detail_page_model.dart';
@@ -45,11 +46,30 @@ class PlaceDetailScreen extends ConsumerWidget {
         final item = snapshot.data![0];
         return CustomScrollView(
           slivers: [
+            SliverAppBar(
+              title: Text(
+                item.resultList.title,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  shadows: [Shadow(color: Colors.black26, blurRadius: 5)],
+                ),
+              ),
+              backgroundColor: SECONDARY_COLOR,
+              expandedHeight: 300,
+              floating: true,
+              pinned: true,
+              shadowColor: Colors.transparent,
+              flexibleSpace: FlexibleSpaceBar(
+                background:
+                    PlaceImageSlider(imageList: item.resultList.imageList),
+              ),
+            ),
             SliverToBoxAdapter(
               child: PlaceDetailCard(
-                image: PlaceImageSlider(
-                  imageList: item.resultList.imageList,
-                ),
+                // image: PlaceImageSlider(
+                //   imageList: item.resultList.imageList,
+                // ),
                 title: item.resultList.title,
                 areaName: item.resultList.areaName,
                 partName: item.resultList.partName,

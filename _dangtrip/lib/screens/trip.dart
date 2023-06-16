@@ -8,6 +8,7 @@ import 'package:_dangtrip/screens/place_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Trip extends ConsumerWidget {
   const Trip({
@@ -88,7 +89,7 @@ class Trip extends ConsumerWidget {
                 height: 50,
                 decoration: BoxDecoration(
                   border: Border.all(color: const Color(0xffe1e1e1)),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(30),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -106,7 +107,7 @@ class Trip extends ConsumerWidget {
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
-                              color: Color(0xffe1e1e1),
+                              color: TEXT_INPUT_BORDER_COLOR,
                             ),
                           ))
                     ],
@@ -225,8 +226,9 @@ class Trip extends ConsumerWidget {
                 builder:
                     (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
                   if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return Center(
+                      child: LoadingAnimationWidget.inkDrop(
+                          color: PRIMARY_COLOR, size: 24),
                     );
                   }
 

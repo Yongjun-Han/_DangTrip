@@ -81,14 +81,48 @@ class HotPlace extends ConsumerWidget {
               // print("FFF${snapshot.data}");
 
               if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return Expanded(
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 3,
+                    itemBuilder: (_, index) {
+                      return Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Container(
+                              width: 148,
+                              height: 148,
+                              color: const Color.fromARGB(255, 234, 234, 234),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Container(
+                              width: 148,
+                              height: 16,
+                              color: const Color.fromARGB(255, 234, 234, 234),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    separatorBuilder: (_, index) {
+                      return const SizedBox(
+                        width: 16,
+                      );
+                    },
+                  ),
                 );
               }
               return Expanded(
                   child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data!['title'].length,
+                      itemCount: 10,
+                      // itemCount: snapshot.data!['title'].length,
                       itemBuilder: (_, index) {
                         final item = snapshot.data!['title'][index];
                         final seqItem = snapshot.data!['seq'][index];
@@ -118,7 +152,7 @@ class HotPlace extends ConsumerWidget {
                         );
                       }));
             }),
-          )
+          ),
         ],
       ),
     );

@@ -9,7 +9,7 @@ Completer<NaverMapController> _controller = Completer();
 
 class PlaceDetailCard extends StatelessWidget {
   //썸네일
-  // final Widget image;
+  final Widget image;
   //상호명,주소,키워드,연락처,영업시간,홈페이지,가게소개,주요시설,메뉴,주의사항,견종
   final String title,
       areaName,
@@ -31,7 +31,7 @@ class PlaceDetailCard extends StatelessWidget {
   //주차여부
 
   const PlaceDetailCard({
-    // required this.image,
+    required this.image,
     required this.title,
     required this.areaName,
     required this.partName,
@@ -68,26 +68,26 @@ class PlaceDetailCard extends StatelessWidget {
         child: Column(
           //썸네일 이미지
           children: [
-            // Stack(
-            //   children: [
-            //     image,
-            //     Padding(
-            //       padding:
-            //           const EdgeInsets.symmetric(vertical: 56, horizontal: 8),
-            //       child: IconButton(
-            //         onPressed: () {
-            //           Navigator.pop(context);
-            //         },
-            //         icon: const Icon(
-            //           Icons.keyboard_arrow_left_rounded,
-            //           size: 32,
-            //           color: Colors.white,
-            //           shadows: [Shadow(color: Colors.black26, blurRadius: 5)],
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
+            Stack(
+              children: [
+                image,
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 56, horizontal: 8),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(
+                      Icons.keyboard_arrow_left_rounded,
+                      size: 32,
+                      color: Colors.white,
+                      shadows: [Shadow(color: Colors.black26, blurRadius: 5)],
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(
               height: 24,
             ),
@@ -382,27 +382,18 @@ class PlaceDetailCard extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  if (homePage != "")
-                    GestureDetector(
-                      onTap: onButtonTap,
-                      child: Text(
-                        homePage,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: PRIMARY_COLOR,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  if (homePage == "")
-                    const Text(
-                      "- 홈페이지 업체 미제공 -",
-                      style: TextStyle(
-                        color: Colors.grey,
+                  GestureDetector(
+                    onTap: onButtonTap,
+                    child: Text(
+                      homePage,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: PRIMARY_COLOR,
                         fontSize: 14,
                       ),
                     ),
+                  ),
                   const SizedBox(
                     height: 24,
                   ),

@@ -30,6 +30,8 @@ dependencies:
   riverpod_annotation: ^2.1.1
   retrofit: '>=4.0.0 <5.0.0'
   logger: any
+  lottie: ^2.4.0
+  loading_animation_widget: ^1.2.0+4
 
 dev_dependencies:
   flutter_test:
@@ -76,3 +78,5 @@ flutter:
   - lib/assets/event/kanu_dog.jpg
   - lib/assets/logo/splash.png
   - lib/assets/logo/firstrank.png
+  - lib/assets/lottie/guide_lottie.json
+  - lib/assets/lottie/app_lottie.json
