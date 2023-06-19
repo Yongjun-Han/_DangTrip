@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:_dangtrip/Common/Components/place_hot_card.dart';
+import 'package:_dangtrip/Common/Utils/hot_place_provider.dart';
 import 'package:_dangtrip/Common/repository/place_repository.dart';
 import 'package:_dangtrip/screens/place_detail_screen.dart';
 import 'package:dio/dio.dart';
@@ -10,7 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class HotPlace extends ConsumerWidget {
   const HotPlace({super.key});
 
-  Future<Map<String, dynamic>> getHotPlace(String pcCode, int page) async {
+  Future<Map<String, dynamic>> getHotPlace(
+      String pcCode, int page, WidgetRef ref) async {
     final dio = Dio();
 
     //반환해줄값
@@ -24,6 +26,8 @@ class HotPlace extends ConsumerWidget {
     final List seqarr = [];
     //장소의 썸네일 데이터
     final List thumbArr = [];
+    //장소의 썸네일 데이터
+    final List addressArr = [];
 
     await PlaceRepository(dio, baseUrl: 'https://www.pettravel.kr/api')
         .paginate(page: page, pcCode: pcCode)
@@ -32,6 +36,8 @@ class HotPlace extends ConsumerWidget {
       for (int i = 0; i < value[0].resultList.length; i++) {
         titleArr.add(value[0].resultList[i].title);
         partNameArr.add(value[0].resultList[i].partName);
+        addressArr.add(value[0].resultList[i].address);
+
         // placedata['title$i'] = value[0].resultList[i].title;
         seqarr.add(value[0].resultList[i].contentSeq);
       }
@@ -39,6 +45,8 @@ class HotPlace extends ConsumerWidget {
       placedata['part'] = partNameArr;
       placedata['title'] = titleArr;
       placedata['seq'] = seqarr;
+      placedata['address'] = addressArr;
+
       // print(placedata);
       // print(seqarr);
       return seqarr;
@@ -56,6 +64,7 @@ class HotPlace extends ConsumerWidget {
         });
       }
     });
+    ref.read(hotPlaceProvider.notifier).update((state) => placedata);
     return placedata;
   }
 
@@ -76,7 +85,7 @@ class HotPlace extends ConsumerWidget {
           //   title: '디얼투데이',
           // )
           FutureBuilder<Map<String, dynamic>>(
-            future: getHotPlace("PC01", randomNumber),
+            future: getHotPlace("PC01", randomNumber, ref),
             builder: ((context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
               // print("FFF${snapshot.data}");
 

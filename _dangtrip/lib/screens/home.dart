@@ -1,3 +1,4 @@
+import 'package:_dangtrip/Common/Utils/hot_place_provider.dart';
 import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/restaurant/view/restaurant_screen.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
@@ -7,17 +8,19 @@ import 'package:_dangtrip/screens/photo.dart';
 import 'package:_dangtrip/screens/trip.dart';
 import 'package:_dangtrip/widgets/banner_slide.dart';
 import 'package:_dangtrip/widgets/hotplace.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
+class _HomeScreenState extends ConsumerState<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController controller;
   int index = 0;
@@ -44,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    final hotPlaceData = ref.watch(hotPlaceProvider);
     return DefaultLayout(
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: PRIMARY_COLOR,
@@ -57,7 +61,10 @@ class _HomeScreenState extends State<HomeScreen>
           currentIndex: index,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(
+                CupertinoIcons.house_alt,
+                size: 23,
+              ),
               label: '홈',
             ),
             BottomNavigationBarItem(
@@ -153,7 +160,9 @@ class _HomeScreenState extends State<HomeScreen>
                             GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (_) => const HotPlaceDetail()));
+                                    builder: (_) => HotPlaceDetail(
+                                          data: hotPlaceData,
+                                        )));
                               },
                               child: const Text(
                                 "더보기",
@@ -185,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
-                              "댕트립 이용이처음이신가요?\n이용가이드 보기",
+                              "댕트립 이용이 처음이신가요?\n이용가이드 보기",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,

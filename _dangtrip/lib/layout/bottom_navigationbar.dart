@@ -1,4 +1,5 @@
 import 'package:_dangtrip/Common/const/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BottomNav extends StatefulWidget {
@@ -28,14 +29,26 @@ class _BottomNavState extends State<BottomNav> {
       },
       currentIndex: index,
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
-        BottomNavigationBarItem(icon: Icon(Icons.map_outlined), label: '주변'),
         BottomNavigationBarItem(
-            icon: Icon(Icons.route_outlined), label: '여행짜기'),
+          icon: Icon(CupertinoIcons.house_alt),
+          label: '홈',
+        ),
         BottomNavigationBarItem(
-            icon: Icon(Icons.photo_camera_back), label: '댕생네컷'),
+          icon: Icon(Icons.map_outlined),
+          label: '주변',
+        ),
         BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border_outlined), label: 'MY'),
+          icon: Icon(Icons.route_outlined),
+          label: '여행짜기',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.photo_camera_back),
+          label: '댕생네컷',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite_border_outlined),
+          label: 'MY',
+        ),
       ],
     );
   }

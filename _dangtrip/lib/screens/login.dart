@@ -158,10 +158,19 @@ class _LoginState extends ConsumerState<Login> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const CustomButton(
-                      buttonTextColor: Color(0xff493523),
-                      buttonTitle: '카카오톡 로그인',
-                      buttonBgColor: Color(0xffF6E24B),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const HomeScreen(),
+                          ),
+                        );
+                      },
+                      child: const CustomButton(
+                        buttonTextColor: Color(0xff493523),
+                        buttonTitle: '카카오톡 로그인',
+                        buttonBgColor: Color(0xffF6E24B),
+                      ),
                     ),
                     const SizedBox(
                       height: 12,

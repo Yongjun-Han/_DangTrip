@@ -32,6 +32,7 @@ dependencies:
   logger: any
   lottie: ^2.4.0
   loading_animation_widget: ^1.2.0+4
+  
 
 dev_dependencies:
   flutter_test:
@@ -80,3 +81,4 @@ flutter:
   - lib/assets/logo/firstrank.png
   - lib/assets/lottie/guide_lottie.json
   - lib/assets/lottie/app_lottie.json
+

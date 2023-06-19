@@ -4,7 +4,9 @@ import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/Common/repository/place_repository.dart';
 import 'package:_dangtrip/layout/default_layout.dart';
 import 'package:_dangtrip/model/detail_page_model.dart';
+import 'package:_dangtrip/screens/home.dart';
 import 'package:_dangtrip/widgets/place_image_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -64,6 +66,17 @@ class PlaceDetailScreen extends ConsumerWidget {
                 background:
                     PlaceImageSlider(imageList: item.resultList.imageList),
               ),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const HomeScreen(),
+                        ),
+                      );
+                    },
+                    icon: const Icon(CupertinoIcons.house_alt)),
+              ],
             ),
             SliverToBoxAdapter(
               child: PlaceDetailCard(

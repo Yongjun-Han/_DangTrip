@@ -68,26 +68,6 @@ class PlaceDetailCard extends StatelessWidget {
         child: Column(
           //썸네일 이미지
           children: [
-            // Stack(
-            //   children: [
-            //     image,
-            //     Padding(
-            //       padding:
-            //           const EdgeInsets.symmetric(vertical: 56, horizontal: 8),
-            //       child: IconButton(
-            //         onPressed: () {
-            //           Navigator.pop(context);
-            //         },
-            //         icon: const Icon(
-            //           Icons.keyboard_arrow_left_rounded,
-            //           size: 32,
-            //           color: Colors.white,
-            //           shadows: [Shadow(color: Colors.black26, blurRadius: 5)],
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
             const SizedBox(
               height: 24,
             ),
@@ -308,23 +288,28 @@ class PlaceDetailCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 24,
                   ),
-                  Row(
-                    children: [
-                      const Text(
-                        '태그 : ',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      Text(
-                        keyword,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: PRIMARY_COLOR,
-                        ),
-                      ),
-                    ],
+                  const Text(
+                    "태그",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: Color(0xff4d4d4d),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    keyword,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: PRIMARY_COLOR,
+                    ),
                   ),
                   const SizedBox(
                     height: 24,
@@ -422,17 +407,43 @@ class PlaceDetailCard extends StatelessWidget {
                       color: Color.fromARGB(255, 232, 111, 111),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
                   Text(
                     // policyCautions.substring(0, policyCautions.indexOf(' -')),
-                    policyCautions,
+                    policyCautions
+                        .replaceAll("- ", "\n")
+                        .replaceAll("- ", "")
+                        .replaceAll("*", "\n*"),
                     style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xff4d4d4d),
                     ),
                   ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 1,
+                    decoration: const BoxDecoration(color: Color(0xffe6e6e6)),
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  const Text(
+                    '상품안내',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: Color.fromARGB(255, 111, 149, 232),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(usedCost.replaceAll("원- ", "원\n").replaceAll("- ", "")),
                   const SizedBox(
                     height: 24,
                   ),
