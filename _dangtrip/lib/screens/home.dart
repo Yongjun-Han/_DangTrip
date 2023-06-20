@@ -7,6 +7,7 @@ import 'package:_dangtrip/screens/maps.dart';
 import 'package:_dangtrip/screens/photo.dart';
 import 'package:_dangtrip/screens/trip.dart';
 import 'package:_dangtrip/widgets/banner_slide.dart';
+import 'package:_dangtrip/widgets/discount_place.dart';
 import 'package:_dangtrip/widgets/hotplace.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -128,7 +129,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                   width: 10,
                                 ),
                                 const Text(
-                                  "어디로 떠나시나요?",
+                                  "댕댕이와 여행가기",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,
@@ -151,7 +152,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             const Text(
-                              "TOP 20 플레이스",
+                              "인기있개 TOP 20",
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
@@ -220,7 +221,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Text(
-                              "갓성비 숙소 !",
+                              "자고가개 ! 갓성비 숙소",
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
@@ -229,6 +230,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                           ],
                         ),
                       ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 300,
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 16),
+                          child: DiscountPlace(),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      )
                     ],
                   )
                 ],

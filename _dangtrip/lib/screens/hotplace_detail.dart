@@ -17,15 +17,15 @@ class HotPlaceDetail extends StatelessWidget {
     print(data);
     return DefaultLayout(
       title: 'TOP 20 플레이스',
-      child: Column(
+      child: Row(
         children: [
           Expanded(
               child: ListView.separated(
-            scrollDirection: Axis.vertical,
+            scrollDirection: Axis.horizontal,
             itemCount: data['title'].length,
             itemBuilder: (_, index) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.only(left: 16),
                 child: Column(
                   children: [
                     const SizedBox(
@@ -44,9 +44,10 @@ class HotPlaceDetail extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
                               data['thumbUrl'][index],
-                              height: 200,
+
+                              width: 310,
                               // height: MediaQuery.of(context).size.height,
-                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.75,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -64,7 +65,7 @@ class HotPlaceDetail extends StatelessWidget {
                                 child: Text(
                                   data['title'][index],
                                   style: const TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 18,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     // backgroundColor: Colors.black,
@@ -111,24 +112,21 @@ class HotPlaceDetail extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // Text(data['address'][index])
-                    // Text((index + 1).toString()),
-                    // Text(
-                    //   data['title'][index],
-                    //   style: const TextStyle(color: Colors.black),
-                    // ),
                   ],
                 ),
               );
             },
             separatorBuilder: (_, index) {
               return const SizedBox(
-                height: 20,
+                width: 4,
               );
             },
           )),
           const SizedBox(
             height: 48,
+          ),
+          const SizedBox(
+            width: 16,
           )
         ],
       ),
