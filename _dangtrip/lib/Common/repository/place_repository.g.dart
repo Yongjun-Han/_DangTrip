@@ -26,7 +26,7 @@ class _PlaceRepository implements PlaceRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<List<PlaceCursorPagination>>(Options(
       method: 'GET',
@@ -35,7 +35,7 @@ class _PlaceRepository implements PlaceRepository {
     )
             .compose(
               _dio.options,
-              '/listPart.do?page=${page}&pageBlock=20&partCode=${pcCode}',
+              '/listPart.do?page=${page}&pageBlock=10&partCode=${pcCode}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -55,7 +55,7 @@ class _PlaceRepository implements PlaceRepository {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<List<dynamic>>(_setStreamType<List<DetailPageModel>>(Options(
       method: 'GET',

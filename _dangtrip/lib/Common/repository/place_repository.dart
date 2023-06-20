@@ -27,7 +27,7 @@ abstract class PlaceRepository {
   // void checkAuth();
 
   //https://www.pettravel.kr/api/listPart.do?page=1&pageBlock=10&partCode=$pcCode'
-  @GET('/listPart.do?page={page}&pageBlock=20&partCode={pcCode}')
+  @GET('/listPart.do?page={page}&pageBlock=10&partCode={pcCode}')
   Future<List<PlaceCursorPagination>> paginate({
     @Path('page') required int page,
     @Path('pcCode') required String pcCode,
