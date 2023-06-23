@@ -28,7 +28,7 @@ class DiscountPlace extends ConsumerWidget {
     final List addressArr = [];
 
     await PlaceRepository(dio, baseUrl: 'https://www.pettravel.kr/api')
-        .paginate(page: page, pcCode: pcCode)
+        .paginate(page: page, pcCode: pcCode, pageBlock: 10)
         .then((value) {
       // print(placedata['data']);
       for (int i = 0; i < value[0].resultList.length; i++) {

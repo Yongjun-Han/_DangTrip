@@ -30,7 +30,7 @@ class HotPlace extends ConsumerWidget {
     final List addressArr = [];
 
     await PlaceRepository(dio, baseUrl: 'https://www.pettravel.kr/api')
-        .paginate(page: page, pcCode: pcCode)
+        .paginate(page: page, pcCode: pcCode, pageBlock: 20)
         .then((value) {
       // print(placedata['data']);
       for (int i = 0; i < value[0].resultList.length; i++) {
@@ -130,7 +130,7 @@ class HotPlace extends ConsumerWidget {
               return Expanded(
                   child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      itemCount: 10,
+                      itemCount: 20,
                       // itemCount: snapshot.data!['title'].length,
                       itemBuilder: (_, index) {
                         final item = snapshot.data!['title'][index];
