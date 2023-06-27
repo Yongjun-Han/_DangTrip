@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:_dangtrip/Common/Components/place_info_card.dart';
 import 'package:_dangtrip/Common/Utils/place_provider.dart';
 import 'package:_dangtrip/Common/Utils/place_state_notifier.dart';
+import 'package:_dangtrip/Common/const/colors.dart';
 import 'package:_dangtrip/model/place_cursor_pagination_model.dart';
 import 'package:_dangtrip/screens/place_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class PlaceListWidget extends ConsumerStatefulWidget {
   const PlaceListWidget({super.key});
@@ -82,6 +86,8 @@ class _PlaceListWidgetState extends ConsumerState<PlaceListWidget> {
     // PlaceCursorPaginationFetchingMore;
     // PlaceCursorPaginationRefetching;
     final cp = data as PlaceCursorPagination;
+    Random random = Random();
+    final double randomRatings = random.nextDouble();
 
     return Consumer(
       builder: (context, ref, child) {
@@ -91,14 +97,23 @@ class _PlaceListWidgetState extends ConsumerState<PlaceListWidget> {
             itemCount: cp.resultList.length + 1,
             itemBuilder: (_, index) {
               if (index == cp.resultList.length) {
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Center(
-                    child: data is PlaceCursorPaginationFetchingMore
-                        ? const CircularProgressIndicator()
-                        : const Text("더이상 데이터가 없습니다."),
-                  ),
+                return Column(
+                  children: [
+                    Center(
+                      child: data is PlaceCursorPaginationFetchingMore
+                          ? LoadingAnimationWidget.staggeredDotsWave(
+                              color: PRIMARY_COLOR, size: 24)
+                          : const Text(
+                              "더이상 데이터가 없습니다.",
+                              style: TextStyle(
+                                color: TEXT_SUB,
+                              ),
+                            ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    )
+                  ],
                 );
               }
               final item = cp.resultList[index];
@@ -137,7 +152,7 @@ class _PlaceListWidgetState extends ConsumerState<PlaceListWidget> {
                   ),
                   name: item.title,
                   area: item.areaName,
-                  ratings: 4.7,
+                  ratings: double.parse(randomRatings.toStringAsFixed(1)) + 4,
                 ),
               );
               // model: parsedItem,
