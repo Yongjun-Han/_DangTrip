@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:_dangtrip/Common/repository/place_repository.dart';
+import 'package:_dangtrip/model/place_pagination_params.dart';
 import 'package:_dangtrip/screens/discount_detail_page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +28,14 @@ class DiscountPlace extends ConsumerWidget {
     //장소의 썸네일 데이터
     final List addressArr = [];
 
+    PlacePaginationParams placePaginationParams =
+        const PlacePaginationParams(page: 1);
+
     await PlaceRepository(dio, baseUrl: 'https://www.pettravel.kr/api')
-        .paginate(page: page, pcCode: pcCode, pageBlock: 10)
+        .paginate(
+            paginationParams: placePaginationParams,
+            pcCode: pcCode,
+            pageBlock: 10)
         .then((value) {
       // print(placedata['data']);
       for (int i = 0; i < value[0].resultList.length; i++) {

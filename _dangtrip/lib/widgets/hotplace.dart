@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:_dangtrip/Common/Components/place_hot_card.dart';
 import 'package:_dangtrip/Common/Utils/hot_place_provider.dart';
 import 'package:_dangtrip/Common/repository/place_repository.dart';
+import 'package:_dangtrip/model/place_pagination_params.dart';
 import 'package:_dangtrip/screens/place_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,9 @@ class HotPlace extends ConsumerWidget {
   Future<Map<String, dynamic>> getHotPlace(
       String pcCode, int page, WidgetRef ref) async {
     final dio = Dio();
+
+    Random random = Random();
+    final int randomNumber = random.nextInt(100);
 
     //반환해줄값
     final Map<String, dynamic> placedata = {};
@@ -29,8 +33,14 @@ class HotPlace extends ConsumerWidget {
     //장소의 썸네일 데이터
     final List addressArr = [];
 
+    PlacePaginationParams placePaginationParams =
+        PlacePaginationParams(page: randomNumber);
+
     await PlaceRepository(dio, baseUrl: 'https://www.pettravel.kr/api')
-        .paginate(page: page, pcCode: pcCode, pageBlock: 20)
+        .paginate(
+            paginationParams: placePaginationParams,
+            pcCode: pcCode,
+            pageBlock: 20)
         .then((value) {
       // print(placedata['data']);
       for (int i = 0; i < value[0].resultList.length; i++) {

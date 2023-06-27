@@ -1,6 +1,7 @@
 import 'package:_dangtrip/Common/Utils/place_provider.dart';
 import 'package:_dangtrip/model/detail_page_model.dart';
 import 'package:_dangtrip/model/place_cursor_pagination_model.dart';
+import 'package:_dangtrip/model/place_pagination_params.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
@@ -20,18 +21,14 @@ final placeRepositoryProvider = Provider(
 abstract class PlaceRepository {
   factory PlaceRepository(Dio dio, {String baseUrl}) = _PlaceRepository;
 
-  // @GET('/')
-  // @Headers({
-  //   'accessToken': 'true',
-  // })
-  // void checkAuth();
-
   //https://www.pettravel.kr/api/listPart.do?page=1&pageBlock=10&partCode=$pcCode'
-  @GET('/listPart.do?page={page}&pageBlock={pageBlock}&partCode={pcCode}')
+  @GET('/listPart.do?&pageBlock={pageBlock}&partCode={pcCode}')
   Future<List<PlaceCursorPagination>> paginate({
     @Path('pageBlock') required int pageBlock,
-    @Path('page') required int page,
+    // @Path('page') required int page,
     @Path('pcCode') required String pcCode,
+    @Queries() PlacePaginationParams? paginationParams =
+        const PlacePaginationParams(page: 1),
   });
 
   //'http://www.pettravel.kr/api/detailSeqPart.do?partCode=$category&contentNum=$contentSeq'

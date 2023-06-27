@@ -25,11 +25,10 @@ class _PlaceListWidgetState extends ConsumerState<PlaceListWidget> {
 
   void scrollListener() {
     //현재 위치가 최대값 보다 조금 덜되는 위치라면 새로운 데이터 요청
-    if (controller.offset > controller.position.maxScrollExtent - 100) {
+    if (controller.offset > controller.position.maxScrollExtent - 150) {
       ref.read(placeProvider.notifier).paginate(
             fetchMore: true,
           );
-      // ref.read(contentPageProvider.notifier).update((state) => state + 10);
     }
   }
 
@@ -61,7 +60,7 @@ class _PlaceListWidgetState extends ConsumerState<PlaceListWidget> {
           }
         }
       }
-
+      // ref.read(contentPageProvider.notifier).update((state) => state + 10);
       return thumbArr;
     }
 
@@ -89,8 +88,19 @@ class _PlaceListWidgetState extends ConsumerState<PlaceListWidget> {
         return Expanded(
           child: ListView.separated(
             controller: controller,
-            itemCount: cp.resultList.length,
+            itemCount: cp.resultList.length + 1,
             itemBuilder: (_, index) {
+              if (index == cp.resultList.length) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Center(
+                    child: data is PlaceCursorPaginationFetchingMore
+                        ? const CircularProgressIndicator()
+                        : const Text("더이상 데이터가 없습니다."),
+                  ),
+                );
+              }
               final item = cp.resultList[index];
               // final thumbItem = getThumb(categoryState);
               //장소 카드 리스트의 카드

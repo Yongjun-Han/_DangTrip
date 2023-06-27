@@ -1,6 +1,7 @@
 import 'package:_dangtrip/Common/Utils/place_provider.dart';
 import 'package:_dangtrip/Common/repository/place_repository.dart';
 import 'package:_dangtrip/model/place_cursor_pagination_model.dart';
+import 'package:_dangtrip/model/place_pagination_params.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final placeProvider =
@@ -10,7 +11,7 @@ final placeProvider =
     final notifier = PlaceStateNotifier(
       repository: repository,
       // page: 1,
-      page: ref.watch(contentPageProvider),
+      // page: ref.watch(contentPageProvider),
       pcCode: ref.watch(categoryProvider),
     );
     return notifier;
@@ -18,12 +19,12 @@ final placeProvider =
 );
 
 class PlaceStateNotifier extends StateNotifier<PlaceCursorPaginationBase> {
-  late final int page;
+  // late final int page;
   final String pcCode;
   final PlaceRepository repository;
   PlaceStateNotifier({
     required this.repository,
-    required this.page,
+    // required this.page,
     required this.pcCode,
   }) : super(PlaceCursorPaginationLoading()) {
     paginate();
@@ -36,13 +37,14 @@ class PlaceStateNotifier extends StateNotifier<PlaceCursorPaginationBase> {
     //강제 재로딩
     //true = PlaceCursorPaginationLoading
     bool forceRefech = false,
+    int pageCount = 1,
   }) async {
     try {
       //바로 반환해야할때 :
       //1.contentPageProvider 가 totalCount-10 보다 클때. 데이터가 더 없음
       if (state is PlaceCursorPagination && !forceRefech) {
         final pState = state as PlaceCursorPagination;
-        if (pState.totalCount - 10 < 1) {
+        if (pState.totalCount - 10 < pageCount) {
           return;
         }
       }
@@ -54,6 +56,9 @@ class PlaceStateNotifier extends StateNotifier<PlaceCursorPaginationBase> {
       if (fetchMore && (isLoading || isRefetching || isFetchingMore)) {
         return;
       }
+
+      PlacePaginationParams placePaginationParams =
+          PlacePaginationParams(page: pageCount);
 
       //5가지 state 의 가능성
       //1.정상적으로 데이터가 있는상태 - PlaceCursorPagination;
@@ -69,9 +74,9 @@ class PlaceStateNotifier extends StateNotifier<PlaceCursorPaginationBase> {
           message: pState.message,
           totalCount: pState.totalCount,
           resultList: pState.resultList,
-        );
-        // PlaceStateNotifier(
-        //     repository: repository, page: page + 10, pcCode: pcCode);
+        ); //기존의 데이터 유지
+        placePaginationParams = placePaginationParams.copyWith(
+            page: pageCount + pState.resultList.length);
       }
       //데이터를 처음부터 가져오는 상황
       else {
@@ -88,8 +93,11 @@ class PlaceStateNotifier extends StateNotifier<PlaceCursorPaginationBase> {
         }
       }
 
-      final res =
-          await repository.paginate(pageBlock: 10, page: page, pcCode: pcCode);
+      //새로 요청
+      final res = await repository.paginate(
+          pageBlock: 10,
+          paginationParams: placePaginationParams,
+          pcCode: pcCode);
 
       if (state is PlaceCursorPaginationFetchingMore) {
         final pState = state as PlaceCursorPaginationFetchingMore;
