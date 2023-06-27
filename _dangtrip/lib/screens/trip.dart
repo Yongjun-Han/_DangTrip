@@ -13,8 +13,6 @@ class Trip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final categoryState = ref.watch(categoryProvider);
-    // final pageState = ref.watch(contentPageProvider);
     final List<CategoryModel> selectState = ref.watch(selectProvider);
 
     return Center(
