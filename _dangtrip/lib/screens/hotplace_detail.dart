@@ -21,7 +21,7 @@ class HotPlaceDetail extends StatelessWidget {
         children: [
           Expanded(
               child: ListView.separated(
-            scrollDirection: Axis.horizontal,
+            scrollDirection: Axis.vertical,
             itemCount: data['title'].length,
             itemBuilder: (_, index) {
               return Padding(
@@ -38,16 +38,16 @@ class HotPlaceDetail extends StatelessWidget {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (_) => PlaceDetailScreen(
                                     contentSeq: data['seq'][index],
-                                    pcCode: data['pcCode'][index])));
+                                    pcCode: "PC01")));
                           },
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
                               data['thumbUrl'][index],
 
-                              width: 310,
-                              // height: MediaQuery.of(context).size.height,
-                              height: MediaQuery.of(context).size.height * 0.75,
+                              width: MediaQuery.of(context).size.width,
+                              height: 180,
+                              // height: MediaQuery.of(context).size.height * 0.75,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -55,25 +55,36 @@ class HotPlaceDetail extends StatelessWidget {
                         Positioned(
                           bottom: 16,
                           left: 16,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Container(
-                              color: Colors.black,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 16),
-                                child: Text(
-                                  data['title'][index],
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    // backgroundColor: Colors.black,
-                                  ),
-                                ),
-                              ),
+                          child: Text(
+                            data['title'][index],
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              shadows: [
+                                Shadow(color: Colors.black87, blurRadius: 20)
+                              ],
                             ),
                           ),
+                          // child: ClipRRect(
+                          //   borderRadius: BorderRadius.circular(8),
+                          //   child: Container(
+                          //     color: Colors.black,
+                          //     child: Padding(
+                          //       padding: const EdgeInsets.symmetric(
+                          //           horizontal: 16, vertical: 16),
+                          //       child: Text(
+                          //         data['title'][index],
+                          //         style: const TextStyle(
+                          //           fontSize: 18,
+                          //           color: Colors.white,
+                          //           fontWeight: FontWeight.bold,
+                          //           // backgroundColor: Colors.black,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ),
                         Positioned(
                           right: 16,

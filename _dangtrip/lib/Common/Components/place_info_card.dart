@@ -31,12 +31,10 @@ class PlaceInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (isDetail) image,
-        if (!isDetail)
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: image,
-          ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: image,
+        ),
         const SizedBox(
           height: 16,
         ),

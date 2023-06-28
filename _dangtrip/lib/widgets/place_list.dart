@@ -10,6 +10,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:skeletons/skeletons.dart';
 
 class PlaceListWidget extends ConsumerStatefulWidget {
   const PlaceListWidget({super.key});
@@ -136,11 +137,19 @@ class _PlaceListWidgetState extends ConsumerState<PlaceListWidget> {
                     future: getThumb(categoryState),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
-                        return Container(
-                          height: 250,
-                          width: MediaQuery.of(context).size.width,
-                          color: const Color.fromARGB(255, 234, 234, 234),
+                        return SkeletonAvatar(
+                          style: SkeletonAvatarStyle(
+                            shape: BoxShape.rectangle,
+                            width: MediaQuery.of(context).size.width,
+                            height: 250,
+                          ),
                         );
+
+                        // return Container(
+                        //   height: 250,
+                        //   width: MediaQuery.of(context).size.width,
+                        //   color: const Color.fromARGB(255, 234, 234, 234),
+                        // );
                       }
                       return Image.network(
                         snapshot.data![index],

@@ -6,6 +6,7 @@ import 'package:_dangtrip/screens/discount_detail_page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:skeletons/skeletons.dart';
 
 class DiscountPlace extends ConsumerWidget {
   const DiscountPlace({super.key});
@@ -111,21 +112,25 @@ class DiscountPlace extends ConsumerWidget {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Container(
-                              width: 300,
-                              height: 250,
-                              color: const Color.fromARGB(255, 234, 234, 234),
+                            child: const SkeletonAvatar(
+                              style: SkeletonAvatarStyle(
+                                shape: BoxShape.rectangle,
+                                width: 300,
+                                height: 250,
+                              ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 8,
-                          ),
+                          // const SizedBox(
+                          //   height: 8,
+                          // ),
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Container(
-                              width: 148,
-                              height: 16,
-                              color: const Color.fromARGB(255, 234, 234, 234),
+                            child: SkeletonParagraph(
+                              style: SkeletonParagraphStyle(
+                                  lines: 1,
+                                  lineStyle: SkeletonLineStyle(
+                                      width: 148,
+                                      height: 10,
+                                      borderRadius: BorderRadius.circular(8))),
                             ),
                           ),
                         ],
@@ -142,7 +147,7 @@ class DiscountPlace extends ConsumerWidget {
               return Expanded(
                   child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      itemCount: 20,
+                      itemCount: snapshot.data!['title'].length,
                       // itemCount: snapshot.data!['title'].length,
                       itemBuilder: (_, index) {
                         final item = snapshot.data!['title'][index];

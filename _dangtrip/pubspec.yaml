@@ -32,6 +32,7 @@ dependencies:
   logger: any
   lottie: ^2.4.0
   loading_animation_widget: ^1.2.0+4
+  skeletons: ^0.0.3
   
 
 dev_dependencies:
