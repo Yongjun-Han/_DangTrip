@@ -125,7 +125,7 @@ class _PlaceListWidgetState extends ConsumerState<PlaceListWidget> {
                     MaterialPageRoute(
                       builder: (_) => PlaceDetailScreen(
                         contentSeq: item.contentSeq,
-                        partName: item.partName,
+                        pcCode: categoryState,
                       ),
                     ),
                   );

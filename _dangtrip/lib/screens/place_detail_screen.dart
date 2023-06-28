@@ -12,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PlaceDetailScreen extends ConsumerWidget {
   final int contentSeq;
-  final String partName;
+  final String pcCode;
 
   // Future<Map<String, dynamic>> getDetail() async {
   Future<List<DetailPageModel>> getDetail(WidgetRef ref, int contentSeq) async {
@@ -24,7 +24,7 @@ class PlaceDetailScreen extends ConsumerWidget {
 
   const PlaceDetailScreen({
     required this.contentSeq,
-    required this.partName,
+    required this.pcCode,
     super.key,
   });
 

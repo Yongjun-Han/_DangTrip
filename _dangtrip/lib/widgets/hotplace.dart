@@ -153,7 +153,7 @@ class HotPlace extends ConsumerWidget {
                               MaterialPageRoute(
                                 builder: (_) => PlaceDetailScreen(
                                   contentSeq: seqItem,
-                                  partName: partItem,
+                                  pcCode: "PC01",
                                 ),
                               ),
                             );

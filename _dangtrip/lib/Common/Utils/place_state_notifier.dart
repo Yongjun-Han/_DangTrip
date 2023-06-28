@@ -4,6 +4,20 @@ import 'package:_dangtrip/model/place_cursor_pagination_model.dart';
 import 'package:_dangtrip/model/place_pagination_params.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// final placeDetailProvider =
+//     Provider.family<PlaceInfoModel?, int>((ref, contentSeq) {
+//   final state = ref.watch(placeProvider);
+
+//   // PlaceCursorPagination이 아니라는 것은 초기데이터가 없다는 뜻
+//   if (state is! PlaceCursorPagination) {
+//     return null;
+//   }
+//   // is는 자동 캐스팅 된다.
+//   // final pState = state as PlaceCursorPagination;
+//   return state.resultList
+//       .firstWhere((element) => element.contentSeq == contentSeq);
+// });
+
 final placeProvider =
     StateNotifierProvider<PlaceStateNotifier, PlaceCursorPaginationBase>(
   (ref) {
@@ -30,7 +44,7 @@ class PlaceStateNotifier extends StateNotifier<PlaceCursorPaginationBase> {
     paginate();
   }
 
-  void paginate({
+  Future<void> paginate({
     //true 일 경우 추가데이터 요청
     //false 일 경우 새로고침 (현재 상태를 대치)
     bool fetchMore = false,
@@ -112,4 +126,33 @@ class PlaceStateNotifier extends StateNotifier<PlaceCursorPaginationBase> {
       state = PlaceCursorPaginationError(message: "데이터를 가져오지 못했습니다.");
     }
   }
+
+  // getDetail({
+  //   required int contentSeq,
+  //   required String pcCode,
+  // }) async {
+  //   //만약 데이터가 없는 상태라면
+  //   if (state is! PlaceCursorPagination) {
+  //     await paginate();
+  //   }
+
+  //   //pagination을 햇는데도 state != PlaceCursorPagination 이 아닐떄
+  //   if (state is! PlaceCursorPagination) {
+  //     return;
+  //   }
+
+  //   final pState = state as PlaceCursorPagination;
+
+  //   final res = await repository.getPlaceDetail(
+  //     category: pcCode,
+  //     contentSeq: contentSeq,
+  //   );
+
+  //   state = pState.copyWith(
+  //     resultList: pState.resultList
+  //         .map<PlaceInfoModel>(
+  //             (e) => e.contentSeq == contentSeq ? res[0] : e)
+  //         .toList(),
+  //   );
+  // }
 }

@@ -38,7 +38,7 @@ class HotPlaceDetail extends StatelessWidget {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (_) => PlaceDetailScreen(
                                     contentSeq: data['seq'][index],
-                                    partName: data['part'][index])));
+                                    pcCode: data['pcCode'][index])));
                           },
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
